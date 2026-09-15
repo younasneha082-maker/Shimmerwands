@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shimmerwands | Beauty Meets Bling</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+</head>
+<body>
+
+  <!-- Sparkle Canvas Layer (Lightweight Cursor Sparkles Only) -->
+  <canvas id="sparkle-canvas"></canvas>
+
+  <!-- Top Announcement Bar (Full Width Spanning Header) -->
+  <div class="announcement-bar-wrapper" style="align-items: center; justify-content: center; background: var(--rose-gold-light); border-bottom: 1px solid var(--rose-gold-blush);">
+    <a href="#discount" class="announcement-bar" title="Click to view discount wands & special offers! ✨">
+      ✨ Get 5% off your first order! 🎀
+    </a>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="container nav-wrapper">
+      <!-- Mobile Hamburger Button -->
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Mobile Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Brand Logo -->
+      <a href="#" class="brand-logo">
+        <span class="logo-title">Shimmerwands</span>
+        <span class="logo-subtitle">BEAUTY MEETS BLING</span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#customizer">Customizer</a></li>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#moodboard">Moodboard</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#testing">Tested Quality</a></li>
+        <li><a href="admin-login.html" style="color: var(--rose-gold-dark); font-weight: 700;">Admin Portal 👑</a></li>
+      </ul>
+
+      <!-- Nav Actions (Sound Toggle & Shopping Bag) -->
+      <div class="nav-actions">
+        <button id="sound-toggle-btn" class="icon-btn" title="Toggle Interactive Sound">
+          🔊
+        </button>
+        
+        <button id="cart-btn" class="icon-btn" title="Shopping Bag">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span id="cart-badge" class="cart-badge">1</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Overlay Backdrop -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-nav-drawer" class="mobile-nav-drawer">
+      <div class="mobile-nav-header">
+        <div class="drawer-brand-group">
+          <span class="drawer-logo-title">Shimmerwands</span>
+          <span class="drawer-logo-sub">BEAUTY MEETS BLING</span>
+        </div>
+        <button id="close-mobile-menu" class="btn-close-mobile" aria-label="Close Mobile Menu">&times;</button>
+      </div>
+      
+      <ul class="mobile-nav-links">
+        <li><a href="#hero" class="mobile-nav-link"><span>Home</span> <span>✨</span></a></li>
+        <li><a href="#customizer" class="mobile-nav-link"><span>Customizer</span> <span>💎</span></a></li>
+        <li><a href="#shop" class="mobile-nav-link"><span>Shop Collection</span> <span>🛍️</span></a></li>
+        <li><a href="#moodboard" class="mobile-nav-link"><span>Products Moodboard</span> <span>🖼️</span></a></li>
+        <li><a href="#story" class="mobile-nav-link"><span>Our Story</span> <span>📖</span></a></li>
+        <li><a href="#testing" class="mobile-nav-link"><span>Tested Quality</span> <span>⭐</span></a></li>
+        <li><a href="admin-login.html" class="mobile-nav-link" style="color: var(--rose-gold-dark); font-weight: 700;"><span>Admin Portal</span> <span>👑</span></a></li>
+      </ul>
+
+      <div class="mobile-nav-footer">
+        <a href="#customizer" class="btn-sparkle" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.72rem;">
+          DESIGN YOUR WAND ✨
+        </a>
+        <p style="font-size: 0.72rem; color: #777;">Support: <a href="mailto:shimmerwands@gmail.com" style="color: var(--rose-gold-dark); font-weight: 600; text-decoration: none;">shimmerwands@gmail.com</a></p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-tag">✨ BEAUTY MEETS BLING ✨</div>
+        <h1 class="hero-title">
+          Luxe brushes that sparkle
+          <span class="title-script">as you do.</span>
+        </h1>
+        
+        <!-- Elegant Beauty Quote Card -->
+        <div class="hero-quote-card">
+          <div class="hero-quote-text">"Where beauty meets Sparkle ✨"</div>
+        </div>
+
+        <p class="hero-description">
+          Luxe beauty brushes adorned with rhinestones, made to add a little glam to every stroke. Premium bristles designed for butter-soft application.
+        </p>
+
+        <div class="cta-group">
+          <a href="#shop" class="btn-sparkle">
+            EXPLORE COLLECTION ✨
+          </a>
+          <a href="#customizer" class="btn-secondary">
+            CUSTOM RHINESTONE 💎
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="mouse-light-sweep"></div>
+
+        <!-- Hero Multi-Image Interactive Slider -->
+        <div class="hero-image-card">
+          <div id="hero-slider" class="hero-slider">
+            <div class="hero-slide active">
+              <img src="assets/main_page_1.png" alt="Shimmerwands Main Slide 1">
+            </div>
+            <div class="hero-slide">
+              <img src="assets/main_page_2.png" alt="Shimmerwands Main Slide 2">
+            </div>
+            <div class="hero-slide">
+              <img src="assets/main_page_3.png" alt="Shimmerwands Main Slide 3">
+            </div>
+            <div class="hero-slide">
+              <img src="assets/main_page_4.png" alt="Shimmerwands Main Slide 4">
+            </div>
+            <div class="hero-slide">
+              <img src="assets/main_page_5.png" alt="Shimmerwands Main Slide 5">
+            </div>
+          </div>
+
+          <!-- Slider Navigation Arrows -->
+          <button id="hero-prev-btn" class="slider-btn prev-btn" aria-label="Previous Slide">❮</button>
+          <button id="hero-next-btn" class="slider-btn next-btn" aria-label="Next Slide">❯</button>
+
+          <!-- Slider Dot Indicators -->
+          <div id="hero-dots" class="slider-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+            <span class="dot" data-slide="4"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories-section container">
+    <div class="section-header">
+      <div class="section-tag">CURATED CATEGORIES</div>
+      <h2 class="section-title">Shop by Brush Style</h2>
+      <div class="section-script">The Bling Categories</div>
+    </div>
+
+    <div class="category-grid">
+      <div class="category-card" onclick="location.href='#shop'">
+        <div class="category-icon">👑</div>
+        <h3 class="category-title">Full Face Sets</h3>
+        <p class="category-sub">Complete 10-piece rhinestone wand sets</p>
+      </div>
+
+      <div class="category-card" onclick="location.href='#shop'">
+        <div class="category-icon">💎</div>
+        <h3 class="category-title">Face Sculptors</h3>
+        <p class="category-sub">Plush powder, bronzer & contour wands</p>
+      </div>
+
+      <div class="category-card" onclick="location.href='#shop'">
+        <div class="category-icon">✨</div>
+        <h3 class="category-title">Eye & Brow Magic</h3>
+        <p class="category-sub">Precision shadow & liner blenders</p>
+      </div>
+
+      <div class="category-card" onclick="location.href='#shop'">
+        <div class="category-icon">🎀</div>
+        <h3 class="category-title">Lip & Detailing</h3>
+        <p class="category-sub">Concealer & lip sculpting wands</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom Rhinestone & Monogram Color Builder -->
+  <section id="customizer" class="customizer-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">CUSTOM BRUSH BUILDER</div>
+        <h2 class="section-title">Design Your Custom Rhinestone Wand</h2>
+        <div class="section-script">Select Background & Monogram Colors</div>
+      </div>
+
+      <div class="customizer-card">
+        <!-- Live SVG Brush Preview -->
+        <div class="customizer-preview">
+          <div class="wand-svg-container">
+            <svg viewBox="0 0 100 300" width="100%" height="100%">
+              <defs>
+                <linearGradient id="grad-rose-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fce4e1"/>
+                  <stop offset="50%" stop-color="#d6a7a1"/>
+                  <stop offset="100%" stop-color="#b8736d"/>
+                </linearGradient>
+
+                <linearGradient id="grad-diamond" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="50%" stop-color="#e2e8f0"/>
+                  <stop offset="100%" stop-color="#cbd5e1"/>
+                </linearGradient>
+
+                <linearGradient id="grad-pink-sapphire" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fbcfe8"/>
+                  <stop offset="50%" stop-color="#f472b6"/>
+                  <stop offset="100%" stop-color="#db2777"/>
+                </linearGradient>
+
+                <linearGradient id="grad-champagne-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fef3c7"/>
+                  <stop offset="50%" stop-color="#f59e0b"/>
+                  <stop offset="100%" stop-color="#b45309"/>
+                </linearGradient>
+
+                <linearGradient id="grad-amethyst-violet" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f3e8ff"/>
+                  <stop offset="50%" stop-color="#c084fc"/>
+                  <stop offset="100%" stop-color="#7e22ce"/>
+                </linearGradient>
+
+                <linearGradient id="grad-ruby-sparkle" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fecdd3"/>
+                  <stop offset="50%" stop-color="#f43f5e"/>
+                  <stop offset="100%" stop-color="#be123c"/>
+                </linearGradient>
+
+                <linearGradient id="grad-emerald-luxe" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#a7f3d0"/>
+                  <stop offset="50%" stop-color="#10b981"/>
+                  <stop offset="100%" stop-color="#047857"/>
+                </linearGradient>
+
+                <linearGradient id="grad-midnight-onyx" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#64748b"/>
+                  <stop offset="50%" stop-color="#1e293b"/>
+                  <stop offset="100%" stop-color="#0f172a"/>
+                </linearGradient>
+
+                <linearGradient id="grad-bristle-pink" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#f472b6"/>
+                  <stop offset="50%" stop-color="#fbcfe8"/>
+                  <stop offset="100%" stop-color="#ffffff"/>
+                </linearGradient>
+              </defs>
+
+              <path id="wand-bristles" d="M 25,90 C 20,40 30,10 50,10 C 70,10 80,40 75,90 Z" fill="url(#grad-bristle-pink)" />
+              <rect x="28" y="90" width="44" height="30" rx="4" fill="url(#grad-champagne-gold)" stroke="#b45309" stroke-width="0.5"/>
+              <path id="wand-handle-fill" d="M 32,120 L 38,275 C 38,285 62,285 62,275 L 68,120 Z" fill="url(#grad-rose-gold)" />
+
+              <g id="wand-gems">
+                <circle cx="36" cy="140" r="2.5" fill="#ffffff" opacity="0.95"/>
+                <circle cx="44" cy="140" r="2.5" fill="#ffffff" opacity="0.95"/>
+                <circle cx="52" cy="140" r="2.5" fill="#ffffff" opacity="0.95"/>
+                <circle cx="60" cy="140" r="2.5" fill="#ffffff" opacity="0.95"/>
+
+                <circle cx="38" cy="165" r="2.5" fill="#ffffff" opacity="0.95"/>
+                <circle cx="46" cy="165" r="2.5" fill="#ffffff" opacity="0.95"/>
+                <circle cx="54" cy="165" r="2.5" fill="#ffffff" opacity="0.95"/>
+
+                <circle cx="40" cy="190" r="2.5" fill="#ffffff" opacity="0.95"/>
+                <circle cx="48" cy="190" r="2.5" fill="#ffffff" opacity="0.95"/>
+                <circle cx="56" cy="190" r="2.5" fill="#ffffff" opacity="0.95"/>
+
+                <circle cx="42" cy="215" r="2.5" fill="#ffffff" opacity="0.95"/>
+                <circle cx="50" cy="215" r="2.5" fill="#ffffff" opacity="0.95"/>
+
+                <circle cx="44" cy="240" r="2.5" fill="#ffffff" opacity="0.95"/>
+                <circle cx="52" cy="240" r="2.5" fill="#ffffff" opacity="0.95"/>
+                <circle cx="48" cy="265" r="3" fill="#ffffff" opacity="0.95"/>
+              </g>
+            </svg>
+          </div>
+
+          <div id="monogram-tag-display" class="monogram-tag-preview">S</div>
+        </div>
+
+        <!-- Customizer Controls -->
+        <div class="customizer-controls">
+          <!-- 1. Background / Handle Rhinestone Color -->
+          <div class="option-group">
+            <div class="option-label">
+              1. BACKGROUND COLOR: <span id="selected-handle-name">ROSE GOLD</span>
+            </div>
+            <div class="swatch-picker-grid">
+              <div class="swatch-item active" data-type="bg" data-value="rose-gold" data-name="ROSE GOLD">
+                <div class="swatch swatch-rose-gold"></div>
+                <span class="swatch-name">Rose Gold</span>
+              </div>
+              <div class="swatch-item" data-type="bg" data-value="diamond" data-name="CRYSTAL DIAMOND">
+                <div class="swatch swatch-diamond"></div>
+                <span class="swatch-name">Diamond</span>
+              </div>
+              <div class="swatch-item" data-type="bg" data-value="pink-sapphire" data-name="PINK SAPPHIRE">
+                <div class="swatch swatch-pink-sapphire"></div>
+                <span class="swatch-name">Pink Sapphire</span>
+              </div>
+              <div class="swatch-item" data-type="bg" data-value="champagne-gold" data-name="CHAMPAGNE GOLD">
+                <div class="swatch swatch-champagne-gold"></div>
+                <span class="swatch-name">Champagne</span>
+              </div>
+              <div class="swatch-item" data-type="bg" data-value="amethyst-violet" data-name="AMETHYST VIOLET">
+                <div class="swatch swatch-amethyst-violet"></div>
+                <span class="swatch-name">Amethyst</span>
+              </div>
+              <div class="swatch-item" data-type="bg" data-value="ruby-sparkle" data-name="RUBY RED">
+                <div class="swatch swatch-ruby-sparkle"></div>
+                <span class="swatch-name">Ruby Red</span>
+              </div>
+              <div class="swatch-item" data-type="bg" data-value="emerald-luxe" data-name="EMERALD LUXE">
+                <div class="swatch swatch-emerald-luxe"></div>
+                <span class="swatch-name">Emerald</span>
+              </div>
+              <div class="swatch-item" data-type="bg" data-value="midnight-onyx" data-name="MIDNIGHT ONYX">
+                <div class="swatch swatch-midnight-onyx"></div>
+                <span class="swatch-name">Midnight</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Monogram Tag Color -->
+          <div class="option-group">
+            <div class="option-label">
+              2. MONOGRAM BADGE COLOR: <span id="selected-mono-name">ROSE GOLD</span>
+            </div>
+            <div class="swatch-picker-grid">
+              <div class="swatch-item active" data-type="mono" data-bg="#d6a7a1" data-color="#ffffff" data-name="ROSE GOLD">
+                <div class="swatch swatch-mono-rose-gold"></div>
+                <span class="swatch-name">Rose Gold</span>
+              </div>
+              <div class="swatch-item" data-type="mono" data-bg="#ffffff" data-color="#1f1a1a" data-name="DIAMOND WHITE">
+                <div class="swatch swatch-mono-diamond"></div>
+                <span class="swatch-name">Diamond</span>
+              </div>
+              <div class="swatch-item" data-type="mono" data-bg="#f7d6dc" data-color="#b8736d" data-name="PINK BLUSH">
+                <div class="swatch swatch-mono-blush"></div>
+                <span class="swatch-name">Blush</span>
+              </div>
+              <div class="swatch-item" data-type="mono" data-bg="#e6c594" data-color="#1f1a1a" data-name="CHAMPAGNE GOLD">
+                <div class="swatch swatch-mono-champagne"></div>
+                <span class="swatch-name">Champagne</span>
+              </div>
+              <div class="swatch-item" data-type="mono" data-bg="#fbf8f5" data-color="#b8736d" data-name="PEARL WHITE">
+                <div class="swatch swatch-mono-pearl"></div>
+                <span class="swatch-name">Pearl</span>
+              </div>
+              <div class="swatch-item" data-type="mono" data-bg="#1f1a1a" data-color="#f5dce1" data-name="VELVET BLACK">
+                <div class="swatch swatch-mono-black"></div>
+                <span class="swatch-name">Onyx</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Monogram Text Input -->
+          <div class="option-group">
+            <div class="option-label">
+              ENGRAVED FERRULE MONOGRAM (1 LETTER):
+            </div>
+            <input type="text" id="monogram-input" class="monogram-input" placeholder="e.g. S" maxlength="1">
+          </div>
+
+          <!-- Action Button (Marked UNAVAILABLE) -->
+          <button id="btn-add-custom-wand" class="btn-sparkle btn-unavailable" disabled style="width: 100%; justify-content: center; margin-top: 10px;">
+            UNAVAILABLE ✨
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Collection Grid -->
+  <section id="shop" class="products-section container">
+    <div class="section-header">
+      <div class="section-tag">LUXE BEAUTY COLLECTION</div>
+      <h2 class="section-title">Sparkle Brush Edits</h2>
+      <div class="section-script">Curated for Your Artistry</div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All Wands ✨</button>
+      <button class="filter-btn" data-filter="sets">Full Sets 👑</button>
+      <button class="filter-btn" data-filter="face">Face Sculptors 💎</button>
+      <button class="filter-btn" data-filter="eye">Eye & Brow Magic ✨</button>
+      <button class="filter-btn" data-filter="lip">Lip & Detailing 🎀</button>
+    </div>
+
+    <!-- Advanced Catalog Filter & Sort Toolbar -->
+    <div class="catalog-toolbar">
+      <div class="catalog-filter-group">
+        <div class="catalog-control-item">
+          <label for="sort-products-select" class="catalog-control-label">Sort By:</label>
+          <select id="sort-products-select" class="catalog-select">
+            <option value="default">Featured Edits ✨</option>
+            <option value="price-asc">Price: Low to High ⬆️</option>
+            <option value="price-desc">Price: High to Low ⬇️</option>
+            <option value="title-asc">Name: A to Z 🔤</option>
+            <option value="title-desc">Name: Z to A 🔤</option>
+          </select>
+        </div>
+
+        <div class="catalog-control-item">
+          <label for="filter-price-select" class="catalog-control-label">Price:</label>
+          <select id="filter-price-select" class="catalog-select">
+            <option value="all">All Prices 💰</option>
+            <option value="under-500">Under PKR 500</option>
+            <option value="500-1000">PKR 500 - 1,000</option>
+            <option value="over-1000">Over PKR 1,000</option>
+          </select>
+        </div>
+
+        <div class="catalog-control-item">
+          <label for="filter-color-select" class="catalog-control-label">Color:</label>
+          <select id="filter-color-select" class="catalog-select">
+            <option value="all">All Colors ✨</option>
+            <option value="rose-gold">Rose Gold 🌸</option>
+            <option value="pink">Pink / Coquette 🎀</option>
+            <option value="silver">Silver / Crystal 💎</option>
+            <option value="gold">Gold / Champagne ✨</option>
+            <option value="black">Black / Midnight 🖤</option>
+          </select>
+        </div>
+
+        <div class="catalog-control-item catalog-actions-item">
+          <button id="btn-reset-catalog-filters" class="btn-reset-filters" title="Reset all filters">
+            Reset 🔄
+          </button>
+        </div>
+      </div>
+
+      <div id="product-count-summary" class="product-count-badge">
+        Showing 4 Wands
+      </div>
+    </div>
+
+    <div class="product-grid">
+      <!-- Product 1 -->
+      <div class="product-card" data-id="1" data-category="sets">
+        <span class="product-badge">BESTSELLER</span>
+        <div class="product-img-wrapper">
+          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">💎</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">ROYAL CROWN SET</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="The Royal Crown Rhinestone Set">
+          <div class="quick-view-overlay">
+            <button class="btn-quickview">Quick View ✨</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">The Royal Crown Rhinestone Set</h3>
+          <p class="product-sub">10-Piece Luxury Face & Eye Wand Bouquet</p>
+          <div class="product-price-row">
+            <span class="product-price">$148.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card" data-id="2" data-category="sets">
+        <span class="product-badge">COQUETTE EDITION</span>
+        <div class="product-img-wrapper">
+          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">🎀</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">PINK BOW TRIO</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="Coquette Pink Bow Trio">
+          <div class="quick-view-overlay">
+            <button class="btn-quickview">Quick View ✨</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Coquette Pink Bow Trio</h3>
+          <p class="product-sub">3-Piece Cheek, Contour & Highlight Set</p>
+          <div class="product-price-row">
+            <span class="product-price">$85.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card" data-id="3" data-category="face">
+        <span class="product-badge">NEW ARRIVAL</span>
+        <div class="product-img-wrapper">
+          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">⭐</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">CELESTIAL STARLIGHT</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="Celestial Starlight Face Wand">
+          <div class="quick-view-overlay">
+            <button class="btn-quickview">Quick View ✨</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Celestial Starlight Face Wand</h3>
+          <p class="product-sub">Ultra-Soft Foundation & Bronzer Wand</p>
+          <div class="product-price-row">
+            <span class="product-price">$42.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card" data-id="4" data-category="face">
+        <div class="product-img-wrapper">
+          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">✨</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">EMPRESS POWDER WAND</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="Empress Rose Gold Powder Wand">
+          <div class="quick-view-overlay">
+            <button class="btn-quickview">Quick View ✨</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Empress Rose Gold Powder Wand</h3>
+          <p class="product-sub">Large Fluffy Setting & Powder Brush</p>
+          <div class="product-price-row">
+            <span class="product-price">$55.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Moodboard Section -->
+  <section id="moodboard" class="moodboard-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">AESTHETIC INSPIRATION</div>
+        <h2 class="section-title">Products Moodboard</h2>
+        <div class="section-script">Premium, Luxury & Diamond Vibe</div>
+      </div>
+
+      <div class="moodboard-grid">
+        <!-- Card 1: Premium Quality -->
+        <div class="mood-card">
+          <img src="assets/premium_quality.png" alt="Premium Quality Moodboard">
+          <div class="mood-card-content">
+            <div class="mood-title">PREMIUM QUALITY</div>
+          </div>
+        </div>
+
+        <!-- Card 2: Luxury Vibe -->
+        <div class="mood-card">
+          <img src="assets/luxury.png" alt="Luxury Vibe Moodboard">
+          <div class="mood-card-content">
+            <div class="mood-title">LUXURY VIBE</div>
+          </div>
+        </div>
+
+        <!-- Card 3: Diamond Crystal Shine -->
+        <div class="mood-card">
+          <img src="assets/diamond_crystal_shine.png" alt="Diamond Crystal Shine Moodboard">
+          <div class="mood-card-content">
+            <div class="mood-title">DIAMOND CRYSTAL SHINE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Storybook Section -->
+  <section id="story" class="story-section">
+    <div class="container story-grid">
+      <div class="story-visual">
+        <img src="assets/brand_story_asset.png" alt="Shimmerwands Brand Story & Artistry" class="story-img-main">
+        <div class="story-quote-card">
+          <div class="story-quote-text">"Beauty meets bling."</div>
+        </div>
+      </div>
+
+      <div class="story-content">
+        <div class="section-tag">OUR STORY</div>
+        <h2 class="section-title">Add a Little Glam to Every Stroke</h2>
+        <p style="margin: 20px 0; color: #555; font-size: 0.98rem; font-weight: 300;">
+          At Shimmerwands, we believe makeup application should feel like a magical ritual. Each wand is encrusted with high-clarity rhinestone crystals and paired with butter-soft synthetic bristles. Designed for ultimate luxury, femininity, and flawless performance.
+        </p>
+        <div style="display: flex; gap: 30px; margin-top: 30px;">
+          <div>
+            <div style="font-family: var(--font-heading); font-size: 2.2rem; color: var(--rose-gold-dark);">100%</div>
+            <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #777;">Rhinestone Elegance</div>
+          </div>
+          <div>
+            <div style="font-family: var(--font-heading); font-size: 2.2rem; color: var(--rose-gold-dark);">50K+</div>
+            <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #777;">Sparkling Beauties Worldwide</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tested & Proven Quality Section -->
+  <section id="testing" class="testing-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">PRECISION CRAFTSMANSHIP & RIGOR</div>
+        <h2 class="section-title">Tested & Proven for Over 2 Years</h2>
+        <div class="section-script">Durable Whimsical Elegance</div>
+      </div>
+
+      <div class="testing-layout">
+        <!-- Visual Proof Showcase Card -->
+        <div class="testing-visual-card">
+          <img src="assets/testing_asset_1.png" alt="Washed, Loved, Proven - Shimmerwands Rigorous Testing" class="testing-img">
+        </div>
+
+        <!-- Testing Pillars Column -->
+        <div class="testing-cards-col">
+          <!-- Card 1: 2+ Years Testing -->
+          <div class="testing-card">
+            <div class="testing-badge">LAB & ARTISTRY TESTED</div>
+            <div class="testing-icon">🧪</div>
+            <h3 class="testing-title">2+ Years Rigorously Tested</h3>
+            <p class="testing-text">
+              For over two years, Shimmerwands were subjected to rigorous stress, drop, friction, and environmental wear testing across multiple methods. Engineered so rhinestones stay 100% securely set without losing crystal brilliance.
+            </p>
+          </div>
+
+          <!-- Card 2: Daily Usage Tested -->
+          <div class="testing-card">
+            <div class="testing-badge">ERGONOMIC COMFORT</div>
+            <div class="testing-icon">✨</div>
+            <h3 class="testing-title">Everyday Usage Approved</h3>
+            <p class="testing-text">
+              Crafted for everyday makeup application. Designed with ideal weight balance and a sleek grip that feels lightweight in your hand, making your daily beauty routine effortless and luxurious.
+            </p>
+          </div>
+
+          <!-- Card 3: Wash & Cleansing Tested -->
+          <div class="testing-card">
+            <div class="testing-badge">DEEP WASH PROVEN</div>
+            <div class="testing-icon">🧼</div>
+            <h3 class="testing-title">Washed Tested</h3>
+            <p class="testing-text">
+              Tested through deep cleansing cycles with warm water and brush cleansers. Plush synthetic bristles remain ultra-soft and shed-free, while the rhinestone bond stays pristine.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="container", id="discount">
+    <div class="newsletter-card">
+      <div class="section-tag" style="color: var(--charcoal);">SPARKLE CLUB VIP</div>
+      <h2 class="section-title" style="color: var(--charcoal); font-size: 2.2rem;">Get 5% Off On Your First Wand Order</h2>
+      <p style="font-size: 0.95rem; margin-top: 10px;">Be the first to know about new rhinestone edits, VIP sales & secret drops. Enter your email after placing order to be able to claim your discount.</p>
+
+      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('✨ Welcome to the Sparkle Club! Check your inbox for your 5% code.');">
+        <input type="email" class="newsletter-input" placeholder="Enter your email for sparkle perks..." required>
+        <button type="submit" class="btn-sparkle" style="background: var(--charcoal);">JOIN CLUB ✨</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Slide-out Cart Drawer -->
+  <div id="cart-overlay" class="cart-overlay"></div>
+  <div id="cart-drawer" class="cart-drawer">
+    <div class="cart-header">
+      <div class="cart-title">Your Sparkle Bag ✨</div>
+      <button id="close-cart-btn" class="btn-close-cart">&times;</button>
+    </div>
+
+    <div class="cart-body" id="cart-body-items"></div>
+
+    <div class="cart-footer">
+      <div id="shipping-progress-text" class="shipping-progress">
+        Add <strong>$27.00</strong> more for <strong>FREE Worldwide Shipping</strong>! ✨
+      </div>
+      <div class="progress-bar-bg">
+        <div id="progress-bar-fill" class="progress-bar-fill"></div>
+      </div>
+
+      <div class="cart-total-row">
+        <span>SUBTOTAL:</span>
+        <span id="cart-subtotal">$148.00</span>
+      </div>
+
+      <button id="btn-checkout" class="btn-sparkle" style="width: 100%; justify-content: center;">
+        PROCEED TO CHECKOUT ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- Quick View Modal with Multi-Image Carousel & Attribute Specs -->
+  <div id="quickview-modal" class="modal">
+    <div class="modal-content" style="max-width: 820px; padding: 32px;">
+      <button id="close-modal-btn" class="btn-close-modal">&times;</button>
+      
+      <!-- Left Column: Multi-Image Carousel Gallery -->
+      <div class="quickview-gallery-wrapper">
+        <div class="quickview-img-container">
+          <img id="modal-img" src="assets/main_page_1.png" alt="Product View">
+          <button id="quickview-prev-btn" class="slider-btn prev-btn modal-slider-btn prev" aria-label="Previous image">❮</button>
+          <button id="quickview-next-btn" class="slider-btn next-btn modal-slider-btn next" aria-label="Next image">❯</button>
+        </div>
+        <div id="quickview-dots" class="modal-slider-dots"></div>
+      </div>
+
+      <!-- Right Column: Database Attributes & Details -->
+      <div class="quickview-details-panel">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px;">
+          <span class="section-tag" id="modal-category">RHINESTONE WANDS</span>
+          <span id="modal-badge" class="product-badge-pill" style="display: none;">BESTSELLER</span>
+        </div>
+
+        <h3 id="modal-title" class="product-title" style="font-size: 1.85rem; margin: 4px 0; color: var(--charcoal);"></h3>
+        <p id="modal-sub" class="product-sub" style="font-size: 0.88rem; color: #666; margin-bottom: 14px; line-height: 1.5;"></p>
+
+        <!-- Attribute Specs Cards -->
+        <div class="quickview-attrs-grid">
+          <div class="attr-pill">
+            <span class="attr-label">PRICE</span>
+            <span id="modal-price" class="attr-value" style="color: var(--rose-gold-dark); font-size: 1.25rem;">PKR 0.00</span>
+          </div>
+          <div class="attr-pill">
+            <span class="attr-label">COLOR FINISH</span>
+            <span id="modal-color" class="attr-value">Rose Gold</span>
+          </div>
+          <div class="attr-pill" style="grid-column: span 2;">
+            <span class="attr-label">AVAILABILITY & STOCK</span>
+            <span id="modal-stock-status" class="attr-value" style="color: #047857;">In Stock ✨</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; display: flex; gap: 12px; align-items: center;">
+          <div class="qty-selector">
+            <button id="modal-qty-minus" class="qty-btn">-</button>
+            <span id="modal-qty-val" class="qty-val">1</span>
+            <button id="modal-qty-plus" class="qty-btn">+</button>
+          </div>
+          <button id="modal-add-bag" class="btn-sparkle" style="flex-grow: 1; justify-content: center;">
+            + ADD TO BAG ✨
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customer Checkout Modal -->
+  <div id="checkout-modal" class="modal">
+    <div class="modal-content" style="grid-template-columns: 1fr; max-width: 520px; padding: 32px 28px;">
+      <button id="close-checkout-modal" class="btn-close-modal">&times;</button>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 2.6rem; margin-bottom: 4px;">🛍️</div>
+        <div class="section-tag">SHIMMERWANDS CHECKOUT</div>
+        <h3 class="product-title" style="font-size: 1.8rem; margin: 4px 0; color: var(--charcoal);">Complete Your Order</h3>
+      </div>
+
+      <form id="form-customer-checkout" style="display: flex; flex-direction: column; gap: 14px;">
+        <div class="option-group">
+          <label style="font-size: 0.75rem; letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase;">Full Name *</label>
+          <input type="text" id="checkout-cust-name" class="monogram-input" placeholder="e.g. Ayesha Malik" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="option-group">
+            <label style="font-size: 0.75rem; letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase;">Email Address *</label>
+            <input type="email" id="checkout-cust-email" class="monogram-input" placeholder="ayesha@example.com" required>
+          </div>
+          <div class="option-group">
+            <label style="font-size: 0.75rem; letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase;">Contact Number *</label>
+            <input type="tel" id="checkout-cust-phone" class="monogram-input" placeholder="+92 300 1234567" required>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <label style="font-size: 0.75rem; letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase;">Shipping Address *</label>
+          <input type="text" id="checkout-cust-address" class="monogram-input" placeholder="House #, Street, City, Country" required>
+        </div>
+
+        <div style="background: var(--rose-gold-light); border: 1px solid var(--rose-gold-blush); padding: 14px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin: 8px 0;">
+          <span style="font-family: var(--font-subheading); font-size: 0.95rem; font-weight: 700;">Order Total:</span>
+          <span id="checkout-order-total" style="font-family: var(--font-heading); font-size: 1.4rem; color: var(--rose-gold-dark); font-weight: 700;">PKR 0.00</span>
+        </div>
+
+        <button type="submit" class="btn-sparkle" style="width: 100%; justify-content: center;">
+          PLACE ORDER & PAY ON DELIVERY ✨
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Contact Us Modal -->
+  <div id="contact-modal" class="modal">
+    <div class="modal-content" style="grid-template-columns: 1fr; max-width: 480px; text-align: center; padding: 32px 28px;">
+      <button id="close-contact-modal" class="btn-close-modal">&times;</button>
+      <div style="font-size: 2.8rem; margin-bottom: 8px;">💌</div>
+      <div class="section-tag">GET IN TOUCH</div>
+      <h3 class="product-title" style="font-size: 1.8rem; margin: 4px 0 12px; color: var(--charcoal);">Contact Shimmerwands</h3>
+      <p style="color: #666; font-size: 0.92rem; margin-bottom: 20px; line-height: 1.6;">
+        Have a question about your order, custom rhinestone wands, or shipping? We'd love to hear from you!
+      </p>
+      <div style="background: var(--rose-gold-light); border: 1px solid var(--rose-gold-blush); padding: 16px 20px; border-radius: 16px; margin-bottom: 20px;">
+        <div style="font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--rose-gold-dark); font-weight: 700; margin-bottom: 4px;">Direct Email Support</div>
+        <a href="mailto:5669f195b2fbfb4b2bc752a05f4a8001" style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--rose-gold-deep); font-weight: 600; text-decoration: none;">shimmerwands@gmail.com</a>
+      </div>
+      <p style="font-size: 0.78rem; color: #888;">We typically respond within 24 hours ✨</p>
+    </div>
+  </div>
+
+  <!-- Returns & Exchanges Policy Modal -->
+  <div id="returns-modal" class="modal">
+    <div class="modal-content" style="grid-template-columns: 1fr; max-width: 580px; text-align: left; padding: 32px 28px; max-height: 90vh; overflow-y: auto;">
+      <button id="close-returns-modal" class="btn-close-modal">&times;</button>
+      <div style="text-align: center; margin-bottom: 16px;">
+        <div style="font-size: 2.5rem; margin-bottom: 6px;">🎀</div>
+        <div class="section-tag">CUSTOMER CARE</div>
+        <h3 class="product-title" style="font-size: 1.8rem; margin: 4px 0; color: var(--charcoal);">Returns & Replacements</h3>
+      </div>
+      
+      <div style="font-size: 0.92rem; color: #444; line-height: 1.7;">
+        <p style="margin-bottom: 10px; font-weight: 600; color: var(--charcoal);">We gladly assist you if:</p>
+        <ul style="margin: 0 0 16px 20px; color: #555; list-style-type: disc;">
+          <li>You receive a damaged or defective item</li>
+          <li>You receive the wrong product</li>
+          <li>Your order arrives with a manufacturing issue</li>
+        </ul>
+        
+        <div style="background: var(--rose-gold-light); border-left: 3px solid var(--rose-gold-dark); padding: 12px 16px; border-radius: 0 12px 12px 0; margin-bottom: 20px;">
+          <p style="margin: 0; font-size: 0.88rem; color: var(--rose-gold-deep); font-weight: 500;">
+            Please contact us within <strong>48 hours</strong> of receiving your order, along with clear photos or a video of the issue.
+          </p>
+        </div>
+
+        <h4 style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--charcoal); margin-bottom: 8px;">Refunds</h4>
+        <p style="margin-bottom: 12px;">
+          Once your claim is reviewed and approved, we may offer a replacement or refund, depending on the situation.
+        </p>
+        <p style="margin-bottom: 14px; color: #666; font-size: 0.88rem;">
+          Please note that products damaged due to misuse, improper handling, or normal wear and tear are not eligible for a refund or replacement.
+        </p>
+        
+        <div style="background: #fff0f3; border: 1px solid var(--rose-gold-blush); padding: 14px 16px; border-radius: 12px; font-size: 0.86rem; color: var(--rose-gold-deep); font-weight: 500;">
+          🧼 Due to hygiene and safety reasons, used or opened makeup brushes cannot be returned or exchanged.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Track Order Modal -->
+  <div id="track-modal" class="modal">
+    <div class="modal-content" style="grid-template-columns: 1fr; max-width: 480px; text-align: center; padding: 32px 28px;">
+      <button id="close-track-modal" class="btn-close-modal">&times;</button>
+      <div style="font-size: 2.8rem; margin-bottom: 8px;">📦</div>
+      <div class="section-tag">ORDER TRACKING</div>
+      <h3 class="product-title" style="font-size: 1.8rem; margin: 4px 0 12px; color: var(--charcoal);">Track Your Order</h3>
+      <div style="background: #f8fafc; border: 1.5px dashed #cbd5e1; padding: 20px; border-radius: 16px; margin: 16px 0 20px;">
+        <div style="font-size: 1.1rem; font-weight: 700; color: #64748b; letter-spacing: 1px; margin-bottom: 6px;">UNAVAILABLE RIGHT NOW ✨</div>
+        <p style="font-size: 0.86rem; color: #777; margin: 0;">Our live tracking portal is currently undergoing updates. Please check your email for dispatch notices or contact support.</p>
+      </div>
+      <p style="font-size: 0.78rem; color: #888;">For order inquiries, email us at <a href="mailto:shimmerwands@gmail.com" style="color: var(--rose-gold-dark); text-decoration: underline;">shimmerwands@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="logo-title">Shimmerwands</div>
+        <p>Luxe beauty brushes adorned with rhinestones, made to add a little glam to every stroke. Beauty meets bling.</p>
+        <p style="margin-top: 10px; color: var(--rose-gold);">Follow the sparkle @shimmerwands</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>SHOP</h4>
+        <ul>
+          <li><a href="#shop">The Bling Edit</a></li>
+          <li><a href="#shop">Full Brush Sets</a></li>
+          <li><a href="#customizer">Custom Rhinestone Builder</a></li>
+          <li><a href="#discount">Gift Cards</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>BRAND</h4>
+        <ul>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#testing">Tested Quality</a></li>
+          <li><a href="#moodboard">Products Moodboard</a></li>
+          <li><a href="#testing">Rhinestone Care</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>HELP & SUPPORT</h4>
+        <ul>
+          <li><a href="#" id="footer-track-btn">Track Order</a></li>
+          <li><a href="#" id="footer-returns-btn">Returns & Exchanges</a></li>
+          <li><a href="#" id="footer-contact-btn">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+       2026 Shimmerwands. All Rights Reserved. Designed with Whimsical Sparkle & Bling.
+    </div>
+  </footer>
+
+  <!-- Supabase Cloud SDK & Configuration -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

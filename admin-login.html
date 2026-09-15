@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Shimmerwands</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 10% 20%, rgba(245, 220, 225, 0.6) 0%, rgba(252, 246, 247, 1) 90%);
+      padding: 20px;
+    }
+    
+    .login-card {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: var(--shadow-hover);
+      border: 1px solid var(--rose-gold-blush);
+      text-align: center;
+      position: relative;
+    }
+
+    .login-card .logo-title {
+      font-family: var(--font-high-spirited);
+      font-size: 3.4rem;
+      color: var(--rose-gold-dark);
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .login-card .logo-subtitle {
+      font-family: var(--font-subheading);
+      font-size: 0.62rem;
+      letter-spacing: 4px;
+      color: var(--rose-gold-deep);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: left;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-family: var(--font-subheading);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--rose-gold-blush);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition-smooth);
+      background: #faf8f8;
+    }
+
+    .form-control:focus {
+      border-color: var(--rose-gold-dark);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(184, 115, 109, 0.15);
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: #888;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 16px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      letter-spacing: 2.5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .login-error {
+      background: #fef2f2;
+      border: 1px solid #fecdd3;
+      color: #9f1239;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      display: none;
+      margin-bottom: 10px;
+    }
+
+    .back-home {
+      display: inline-block;
+      margin-top: 24px;
+      font-size: 0.78rem;
+      color: var(--rose-gold-dark);
+      text-decoration: none;
+      font-family: var(--font-subheading);
+      letter-spacing: 1px;
+    }
+
+    .back-home:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 28px 18px;
+        border-radius: 20px;
+      }
+      .login-card .logo-title {
+        font-size: 2.6rem;
+      }
+      .login-card .logo-subtitle {
+        font-size: 0.55rem;
+        letter-spacing: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+    <div style="font-size: 2.5rem; margin-bottom: 4px;">👑</div>
+    <div class="logo-title">Shimmerwands</div>
+    <div class="logo-subtitle">ADMIN PORTAL LOGIN</div>
+
+    <div id="login-error" class="login-error">
+      ⚠️ Invalid username/email or password. Please try again.
+    </div>
+
+    <form id="admin-login-form" class="login-form">
+      <div class="form-group">
+        <label for="login-username">Username or Email</label>
+        <input type="text" id="login-username" class="form-control" placeholder="admin@.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+          <button type="button" id="toggle-password-btn" class="password-toggle" title="Toggle password visibility">👁️</button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-sparkle btn-login">
+        LOGIN TO ADMIN PORTAL ✨
+      </button>
+    </form>
+
+    <!-- <div style="margin-top: 18px; font-size: 0.75rem; color: #888;">
+      Default Super Admin: <strong>admin@shimmerwands.com</strong> / <strong>admin123</strong>
+    </div> -->
+
+    <a href="index.html" class="back-home">← Back to Storefront</a>
+  </div>
+
+  <script>
+    document.getElementById('toggle-password-btn')?.addEventListener('click', function() {
+      const passInput = document.getElementById('login-password');
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+        this.textContent = '🙈';
+      } else {
+        passInput.type = 'password';
+        this.textContent = '👁️';
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

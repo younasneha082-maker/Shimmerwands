@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Shimmerwands</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+  <style>
+    body {
+      background: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Admin Top Header */
+    .admin-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--rose-gold-blush);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .admin-brand .logo-title {
+      font-family: var(--font-high-spirited);
+      font-size: 2.6rem;
+      color: var(--rose-gold-dark);
+      line-height: 1;
+    }
+
+    .admin-badge {
+      background: var(--rose-gold-light);
+      border: 1px solid var(--rose-gold-blush);
+      color: var(--rose-gold-dark);
+      font-family: var(--font-subheading);
+      font-size: 0.65rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .admin-user-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose-gold), var(--rose-gold-dark));
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .btn-logout {
+      background: #fee2e2;
+      color: #991b1b;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-family: var(--font-subheading);
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-logout:hover {
+      background: #fca5a5;
+    }
+
+    /* Admin Main Layout */
+    .admin-layout {
+      display: flex;
+      flex-grow: 1;
+    }
+
+    /* Sidebar Navigation */
+    .admin-sidebar {
+      width: 260px;
+      background: var(--white);
+      border-right: 1px solid var(--rose-gold-blush);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sidebar-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: 14px;
+      background: transparent;
+      border: none;
+      color: var(--charcoal);
+      font-family: var(--font-subheading);
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: var(--transition-smooth);
+    }
+
+    .sidebar-btn:hover {
+      background: var(--rose-gold-light);
+      color: var(--rose-gold-dark);
+    }
+
+    .sidebar-btn.active {
+      background: linear-gradient(135deg, var(--rose-gold), var(--rose-gold-dark));
+      color: var(--white);
+      box-shadow: 0 4px 14px rgba(184, 115, 109, 0.3);
+    }
+
+    .sidebar-btn.super-admin-only {
+      border: 1px dashed var(--rose-gold);
+    }
+
+    /* Admin Content Area */
+    .admin-content {
+      flex-grow: 1;
+      padding: 32px;
+      max-width: 1300px;
+    }
+
+    .tab-content {
+      display: none !important;
+    }
+
+    .tab-content.active {
+      display: block !important;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .page-title {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      color: var(--charcoal);
+    }
+
+    /* Metric Cards Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .metric-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 22px;
+      border: 1px solid var(--rose-gold-blush);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .metric-title {
+      font-family: var(--font-subheading);
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #777;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      color: var(--rose-gold-dark);
+      font-weight: 700;
+    }
+
+    /* Data Tables */
+    .table-card {
+      background: var(--white);
+      border-radius: 24px;
+      border: 1px solid var(--rose-gold-blush);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: var(--rose-gold-light);
+      padding: 16px 20px;
+      font-family: var(--font-subheading);
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--rose-gold-deep);
+      font-weight: 700;
+      border-bottom: 1px solid var(--rose-gold-blush);
+    }
+
+    .data-table td {
+      padding: 16px 20px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.88rem;
+      color: var(--charcoal);
+      vertical-align: middle;
+    }
+
+    .data-table tr:hover {
+      background: #faf8f8;
+    }
+
+    /* Status Badges */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .status-done {
+      background: #d1fae5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .status-super {
+      background: #ede9fe;
+      color: #6d28d9;
+      border: 1px solid #ddd6fe;
+    }
+
+    .status-sub {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+
+    .badge-in-stock { background: #d1fae5; color: #047857; }
+    .badge-low-stock { background: #ffedd5; color: #c2410c; }
+    .badge-out-stock { background: #ffe4e6; color: #be123c; }
+
+    /* Action Buttons */
+    .btn-action {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.05rem;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-action:hover {
+      background: var(--rose-gold-light);
+    }
+
+    .btn-edit { color: #2563eb; }
+    .btn-delete { color: #dc2626; }
+    .btn-toggle-status {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: none;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Modal Styling */
+    .admin-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .admin-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .admin-modal-content {
+      background: var(--white);
+      border-radius: 28px;
+      max-width: 760px;
+      width: 92%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 36px;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(184, 115, 109, 0.2);
+      border: 1px solid var(--rose-gold-blush);
+    }
+
+    .modal-split-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .form-column-card {
+      background: #faf8f8;
+      border: 1px solid var(--rose-gold-blush);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .column-header {
+      font-family: var(--font-subheading);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--rose-gold-dark);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--rose-gold-blush);
+      margin-bottom: 4px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-family: var(--font-subheading);
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      outline: none;
+      transition: var(--transition-smooth);
+      background: var(--white);
+    }
+
+    .form-control:focus {
+      border-color: var(--rose-gold-dark);
+      box-shadow: 0 0 0 3px rgba(184, 115, 109, 0.15);
+    }
+
+    .form-hint {
+      font-size: 0.68rem;
+      color: var(--rose-gold-dark);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* Printable Invoice Styling */
+    .invoice-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 40px;
+      border: 1px solid var(--rose-gold-blush);
+      box-shadow: var(--shadow-soft);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid var(--rose-gold-blush);
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE MOBILE ENGINE FOR ADMIN PORTAL
+       ========================================================================== */
+
+    /* Scrollbars & Close Buttons */
+    .admin-sidebar::-webkit-scrollbar {
+      height: 4px;
+    }
+    .admin-sidebar::-webkit-scrollbar-thumb {
+      background: var(--rose-gold-blush);
+      border-radius: 4px;
+    }
+
+    .btn-close-modal {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: #888;
+      cursor: pointer;
+      line-height: 1;
+      padding: 6px 10px;
+      border-radius: 50%;
+      transition: var(--transition-smooth);
+    }
+    .btn-close-modal:hover {
+      background: #f1f5f9;
+      color: var(--charcoal);
+    }
+
+    /* ==========================================================================
+       LUXURY MOBILE RESPONSIVE ENGINE FOR ADMIN PORTAL
+       ========================================================================== */
+
+    /* Tab Content Visibility Scoping */
+    .tab-content {
+      display: none !important;
+    }
+    .tab-content.active {
+      display: block !important;
+    }
+
+    .mobile-nav-container {
+      display: none;
+      width: 100%;
+      margin-bottom: 6px;
+    }
+
+    .mobile-tab-select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1.5px solid var(--rose-gold-dark);
+      background: var(--white);
+      font-family: var(--font-subheading);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--rose-gold-dark);
+      outline: none;
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+    }
+
+    /* Sticky Actions Column for Mobile Table Visibility */
+    .table-card {
+      background: var(--white);
+      border-radius: 20px;
+      border: 1px solid var(--rose-gold-blush);
+      box-shadow: var(--shadow-soft);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .data-table th:last-child,
+    .data-table td:last-child {
+      position: sticky;
+      right: 0;
+      background: var(--white);
+      z-index: 10;
+      box-shadow: -6px 0 12px rgba(0, 0, 0, 0.06);
+      text-align: center;
+    }
+
+    .data-table th:last-child {
+      background: var(--rose-gold-light);
+    }
+
+    .btn-action {
+      background: var(--rose-gold-light);
+      border: none;
+      cursor: pointer;
+      font-size: 1.05rem;
+      padding: 6px 12px;
+      border-radius: 10px;
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-action:hover {
+      background: var(--rose-gold-blush);
+    }
+
+    /* Horizontal Scrollable Touch Tab Bar for Mobile & Vertical Sidebar for Desktop */
+    .sidebar-nav-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    @media (max-width: 992px) {
+      .admin-layout {
+        flex-direction: column;
+      }
+      .mobile-nav-container {
+        display: block !important;
+        margin-bottom: 0;
+      }
+      .admin-sidebar {
+        width: 100%;
+        flex-direction: column;
+        border-right: none;
+        border-bottom: 1px solid var(--rose-gold-blush);
+        padding: 8px 12px;
+        gap: 0;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      }
+      .sidebar-nav-pills {
+        display: none !important;
+      }
+      .admin-content {
+        padding: 20px 14px;
+      }
+      .modal-split-2, .modal-grid-2 {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .admin-header {
+        padding: 10px 16px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .admin-brand .logo-title {
+        font-size: 2.0rem;
+      }
+      .admin-badge {
+        font-size: 0.58rem;
+        padding: 3px 8px;
+      }
+      .admin-user-info {
+        gap: 10px;
+      }
+      .user-avatar {
+        width: 34px;
+        height: 34px;
+        font-size: 0.85rem;
+      }
+      .btn-logout {
+        padding: 6px 12px;
+        font-size: 0.68rem;
+      }
+      .page-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+      }
+      .page-header button, .page-header select {
+        width: 100% !important;
+        justify-content: center;
+      }
+      .metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .metric-card {
+        padding: 14px;
+        border-radius: 16px;
+      }
+      .metric-title {
+        font-size: 0.65rem;
+        letter-spacing: 1px;
+      }
+      .metric-value {
+        font-size: 1.5rem;
+      }
+      .admin-modal-content {
+        padding: 24px 16px;
+        width: 95%;
+        max-height: 92vh;
+        border-radius: 20px;
+      }
+      .invoice-card {
+        padding: 20px 14px;
+        border-radius: 16px;
+      }
+      .invoice-header {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .invoice-header > div {
+        text-align: left !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .admin-header {
+        padding: 8px 12px;
+      }
+      .admin-brand .logo-title {
+        font-size: 1.8rem;
+      }
+      .page-title {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Admin Header -->
+  <header class="admin-header">
+    <div class="admin-brand">
+      <span class="logo-title">Shimmerwands</span>
+      <span class="admin-badge">ADMIN PORTAL</span>
+    </div>
+
+    <div class="admin-user-info">
+      <div class="user-avatar" id="nav-user-avatar">A</div>
+      <div>
+        <div id="nav-user-name" style="font-weight: 700; font-size: 0.9rem;">Admin</div>
+        <div id="nav-user-role" style="font-size: 0.72rem; color: var(--rose-gold-dark); text-transform: uppercase; font-weight: 600;">SUPER ADMIN</div>
+      </div>
+      <button id="btn-admin-logout" class="btn-logout">LOGOUT 🚪</button>
+    </div>
+  </header>
+
+  <!-- Main Admin Layout -->
+  <div class="admin-layout">
+    <!-- Sidebar Navigation -->
+    <nav class="admin-sidebar">
+      <div class="mobile-nav-container">
+        <select id="admin-mobile-tab-select" class="mobile-tab-select">
+          <option value="tab-admins" class="super-admin-only">👑 Manage Admins</option>
+          <option value="tab-products">💎 Products & Stock</option>
+          <option value="tab-orders">📦 Orders & Status</option>
+          <option value="tab-invoices">📄 Invoices</option>
+          <option value="tab-reports">📊 Analytics & Reports</option>
+          <option value="storefront">🌐 Visit Storefront</option>
+        </select>
+      </div>
+
+      <div class="sidebar-nav-pills">
+        <button class="sidebar-btn super-admin-only active" data-tab="tab-admins">
+          👑 Manage Admins
+        </button>
+        <button class="sidebar-btn" data-tab="tab-products">
+          💎 Products & Stock
+        </button>
+        <button class="sidebar-btn" data-tab="tab-orders">
+          📦 Orders & Status
+        </button>
+        <button class="sidebar-btn" data-tab="tab-invoices">
+          📄 Invoices
+        </button>
+        <button class="sidebar-btn" data-tab="tab-reports">
+          📊 Analytics & Reports
+        </button>
+        <a href="index.html" class="sidebar-btn btn-visit-store" style="color: var(--rose-gold-dark);">
+          🌐 Visit Storefront
+        </a>
+      </div>
+    </nav>
+
+    <!-- Content Tabs Area -->
+    <main class="admin-content">
+
+      <!-- ==========================================================================
+         TAB 1: MANAGE ADMINS (SUPER ADMIN ONLY - FULL CRUD)
+         ========================================================================== -->
+      <section id="tab-admins" class="tab-content active">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Admin Management</h1>
+            <p style="font-size: 0.85rem; color: #666;">Main Super Admin can Add, Edit, or Remove Sub-Admins</p>
+          </div>
+          <button id="btn-open-add-admin" class="btn-sparkle">
+            + ADD NEW ADMIN ✨
+          </button>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-title">Total Admins</div>
+            <div id="metric-total-admins" class="metric-value">1</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Super Admins</div>
+            <div id="metric-super-admins" class="metric-value">1</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Sub-Admins</div>
+            <div id="metric-sub-admins" class="metric-value">0</div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Admin Name</th>
+                <th>Email</th>
+                <th>Contact No</th>
+                <th>CNIC</th>
+                <th>Address</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admins-table-body">
+              <!-- Dynamically Populated by admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+         TAB 2: PRODUCTS & STOCK QUANTITY (FULL CRUD)
+         ========================================================================== -->
+      <section id="tab-products" class="tab-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Products & Inventory Stock</h1>
+            <p style="font-size: 0.85rem; color: #666;">Manage brush wands, prices, badges, and stock quantities</p>
+          </div>
+          <button id="btn-open-add-product" class="btn-sparkle">
+            + ADD NEW WAND ✨
+          </button>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-title">Total Wands</div>
+            <div id="metric-total-products" class="metric-value">4</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Low Stock Alert</div>
+            <div id="metric-low-stock" class="metric-value">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Total Units in Stock</div>
+            <div id="metric-total-stock" class="metric-value">180</div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Wand Item</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock Quantity</th>
+                <th>Stock Status</th>
+                <th>Badge</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="products-table-body">
+              <!-- Dynamically Populated by admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+         TAB 3: ORDERS & STATUS TRACKING (READ-ONLY DETAILS + STATUS TOGGLE)
+         ========================================================================== -->
+      <section id="tab-orders" class="tab-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Customer Orders & Fulfilment</h1>
+            <p style="font-size: 0.85rem; color: #666;">View placed orders, customer details, and toggle Pending vs Done status</p>
+          </div>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-title">Total Orders</div>
+            <div id="metric-total-orders" class="metric-value">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Pending Orders ⏳</div>
+            <div id="metric-pending-orders" class="metric-value" style="color: #b45309;">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Completed Orders ✅</div>
+            <div id="metric-done-orders" class="metric-value" style="color: #047857;">0</div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Contact & Address</th>
+                <th>Order Date</th>
+                <th>Total ($)</th>
+                <th>Fulfilment Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body">
+              <!-- Dynamically Populated by admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+         TAB 4: PRINTABLE INVOICES
+         ========================================================================== -->
+      <section id="tab-invoices" class="tab-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Invoice Generator</h1>
+            <p style="font-size: 0.85rem; color: #666;">Select any customer order to generate and print a luxury invoice</p>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <select id="invoice-order-select" class="form-control" style="width: 220px;">
+              <option value="">Select Order #...</option>
+            </select>
+            <button id="btn-print-invoice" class="btn-sparkle">PRINT / SAVE PDF 🖨️</button>
+          </div>
+        </div>
+
+        <div id="invoice-preview-container">
+          <div class="invoice-card" id="printable-invoice">
+            <div class="invoice-header">
+              <div>
+                <div class="logo-title" style="font-size: 3rem;">Shimmerwands</div>
+                <div style="font-size: 0.65rem; letter-spacing: 3px; color: var(--rose-gold-dark); font-weight: 700;">BEAUTY MEETS BLING</div>
+                <div style="font-size: 0.8rem; color: #666; margin-top: 8px;">Support: shimmerwands@gmail.com</div>
+              </div>
+              <div style="text-align: right;">
+                <h2 style="font-family: var(--font-heading); color: var(--rose-gold-dark); margin-bottom: 4px;">INVOICE</h2>
+                <div id="inv-num" style="font-weight: 700; font-size: 0.95rem;">#SW-1001</div>
+                <div id="inv-date" style="font-size: 0.82rem; color: #777;">Date: Sept 04, 2026</div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+              <div>
+                <div style="font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: #888; font-weight: 700;">Billed To:</div>
+                <div id="inv-cust-name" style="font-weight: 700; font-size: 1.05rem; margin-top: 4px;">Select an Order above</div>
+                <div id="inv-cust-email" style="font-size: 0.85rem; color: #555;">customer@example.com</div>
+                <div id="inv-cust-phone" style="font-size: 0.85rem; color: #555;">+92 300 1234567</div>
+              </div>
+              <div>
+                <div style="font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: #888; font-weight: 700;">Shipping Address:</div>
+                <div id="inv-cust-address" style="font-size: 0.88rem; color: #444; margin-top: 4px;">123 Sparkle Lane, Lahore, Pakistan</div>
+              </div>
+            </div>
+
+            <table class="data-table" style="margin-bottom: 24px;">
+              <thead>
+                <tr>
+                  <th>Item Description</th>
+                  <th style="text-align: center;">Qty</th>
+                  <th style="text-align: right;">Unit Price</th>
+                  <th style="text-align: right;">Total</th>
+                </tr>
+              </thead>
+              <tbody id="inv-items-body">
+                <tr>
+                  <td colspan="4" style="text-align: center; color: #888;">Select an order from the dropdown above to load items.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="display: flex; justify-content: flex-end;">
+              <div style="width: 260px;">
+                <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.9rem;">
+                  <span>Subtotal:</span>
+                  <span id="inv-subtotal">$0.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.9rem;">
+                  <span>Shipping:</span>
+                  <span id="inv-shipping">FREE</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 10px 0; font-size: 1.15rem; font-weight: 700; border-top: 2px solid var(--rose-gold-blush); color: var(--rose-gold-dark);">
+                  <span>Grand Total:</span>
+                  <span id="inv-total">$0.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+         TAB 5: ANALYTICS & REPORTS
+         ========================================================================== -->
+      <section id="tab-reports" class="tab-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Analytics & Store Reports</h1>
+            <p style="font-size: 0.85rem; color: #666;">Revenue analysis, top customer insights, and stock reports</p>
+          </div>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-title">Total Lifetime Revenue</div>
+            <div id="report-total-revenue" class="metric-value">$0.00</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Average Order Value</div>
+            <div id="report-avg-order" class="metric-value">$0.00</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Fulfilment Rate</div>
+            <div id="report-fulfilment-rate" class="metric-value">100%</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px;">
+          <div class="table-card" style="padding: 20px;">
+            <h3 style="font-family: var(--font-heading); margin-bottom: 14px;">Top Purchasing Customers</h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Orders</th>
+                  <th>Total Spent</th>
+                </tr>
+              </thead>
+              <tbody id="report-customers-body">
+                <tr><td colspan="3" style="text-align: center; color: #888;">No orders recorded yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-card" style="padding: 20px;">
+            <h3 style="font-family: var(--font-heading); margin-bottom: 14px;">Inventory Stock Health</h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Wand Item</th>
+                  <th>Units Left</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="report-stock-body">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+     MODAL 1: ADD / EDIT ADMIN MODAL (SUPER ADMIN ONLY)
+     ========================================================================== -->
+  <div id="modal-admin-form" class="admin-modal">
+    <div class="admin-modal-content">
+      <button class="btn-close-modal" id="close-admin-modal">&times;</button>
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="font-size: 2.6rem; margin-bottom: 4px;">👑</div>
+        <div class="section-tag" id="admin-modal-tag">SUPER ADMIN CONTROL</div>
+        <h3 class="product-title" id="admin-modal-title" style="font-size: 1.8rem; margin: 4px 0 0; color: var(--charcoal);">Add New Admin Account</h3>
+      </div>
+
+      <form id="form-admin-save" novalidate style="display: flex; flex-direction: column; gap: 20px;">
+        <input type="hidden" id="admin-edit-id">
+
+        <div class="modal-split-2">
+          <!-- Left Column Card: Admin Personal Info -->
+          <div class="form-column-card">
+            <div class="column-header">
+              <span>👤</span> Personal Details & Identity
+            </div>
+
+            <div class="form-group">
+              <label for="admin-input-name">Full Name *</label>
+              <input type="text" id="admin-input-name" class="form-control" placeholder="e.g. Sarah Khan" required>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-input-email">Email Address *</label>
+              <input type="email" id="admin-input-email" class="form-control" placeholder="sarah@shimmerwands.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-input-contact">Contact Number *</label>
+              <input type="tel" id="admin-input-contact" class="form-control" placeholder="+92 300 1234567" required>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-input-cnic">CNIC Number *</label>
+              <input type="text" id="admin-input-cnic" class="form-control" placeholder="12345-1234567-1" maxlength="15" required>
+              <span class="form-hint">Auto-formats: 12345-1234567-1</span>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-input-address">Residential Address *</label>
+              <input type="text" id="admin-input-address" class="form-control" placeholder="House #, Street, City, Country" required>
+            </div>
+          </div>
+
+          <!-- Right Column Card: System Credentials -->
+          <div class="form-column-card">
+            <div class="column-header">
+              <span>🔑</span> Credentials & Permissions
+            </div>
+
+            <div class="form-group">
+              <label for="admin-input-username">Username / Login ID *</label>
+              <input type="text" id="admin-input-username" class="form-control" placeholder="sarah.admin" required>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-input-role">Admin Role *</label>
+              <select id="admin-input-role" class="form-control">
+                <option value="sub_admin">Sub-Admin (Products & Orders Only)</option>
+                <option value="super_admin">Super Admin (Full Control)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-input-password">Account Password *</label>
+              <div style="position: relative;">
+                <input type="password" id="admin-input-password" class="form-control" style="padding-right: 44px;" placeholder="••••••••">
+                <button type="button" id="toggle-admin-pass-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.05rem;">👁️</button>
+              </div>
+            </div>
+
+            <div class="form-group" id="group-confirm-pass">
+              <label for="admin-input-confirm">Confirm Password *</label>
+              <div style="position: relative;">
+                <input type="password" id="admin-input-confirm" class="form-control" style="padding-right: 44px;" placeholder="••••••••">
+                <button type="button" id="toggle-admin-confirm-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.05rem;">👁️</button>
+              </div>
+            </div>
+
+            <div id="admin-form-error" style="background: #fff0f3; border: 1px solid var(--rose-gold-blush); color: #be123c; padding: 10px 14px; border-radius: 12px; font-size: 0.82rem; display: none;"></div>
+
+            <button type="submit" class="btn-sparkle" style="width: 100%; justify-content: center; margin-top: 10px; padding: 16px; font-size: 0.8rem; letter-spacing: 2px;">
+              SAVE ADMIN ACCOUNT ✨
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+     MODAL 2: ADD / EDIT PRODUCT MODAL
+     ========================================================================== -->
+  <div id="modal-product-form" class="admin-modal">
+    <div class="admin-modal-content">
+      <button class="btn-close-modal" id="close-product-modal">&times;</button>
+      <div class="section-tag">CATALOG MANAGEMENT</div>
+      <h3 class="product-title" id="product-modal-title" style="font-size: 1.6rem; margin-bottom: 20px;">Add New Wand</h3>
+
+      <form id="form-product-save" novalidate style="display: flex; flex-direction: column; gap: 16px;">
+        <input type="hidden" id="product-edit-id">
+
+        <div class="form-group">
+          <label for="prod-input-title">Wand Title *</label>
+          <input type="text" id="prod-input-title" class="form-control" placeholder="e.g. Royal Crown Rhinestone Wand" required>
+        </div>
+
+        <div class="form-group">
+          <label for="prod-input-sub">Subtitle Description *</label>
+          <input type="text" id="prod-input-sub" class="form-control" placeholder="e.g. 10-Piece Luxury Face & Eye Wand Set" required>
+        </div>
+
+        <div class="modal-grid-2">
+          <div class="form-group">
+            <label for="prod-input-category">Category *</label>
+            <select id="prod-input-category" class="form-control">
+              <option value="sets">Full Face Sets</option>
+              <option value="face">Face Sculptors</option>
+              <option value="eye">Eye & Brow Magic</option>
+              <option value="lip">Lip & Detailing</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="prod-input-price">Price (PKR) *</label>
+            <input type="number" step="0.01" id="prod-input-price" class="form-control" placeholder="148.00" required>
+          </div>
+        </div>
+
+        <div class="modal-grid-2">
+          <div class="form-group">
+            <label for="prod-input-quantity">Stock Quantity (Units) *</label>
+            <input type="number" id="prod-input-quantity" class="form-control" placeholder="50" min="0" required>
+          </div>
+
+          <div class="form-group">
+            <label for="prod-input-color">Color Finish *</label>
+            <input type="text" id="prod-input-color" class="form-control" placeholder="e.g. Rose Gold, Diamond Silver" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="prod-input-badge">Badge Tag (Optional)</label>
+          <input type="text" id="prod-input-badge" class="form-control" placeholder="e.g. BESTSELLER or NEW ARRIVAL">
+        </div>
+
+        <div class="form-group">
+          <label for="prod-input-img">Image URLs / File Paths (Separated by commas for multi-pic slider) *</label>
+          <input type="text" id="prod-input-img" class="form-control" placeholder="assets/main_page_1.png, assets/main_page_2.png" required>
+        </div>
+
+        <button type="submit" class="btn-sparkle" style="width: 100%; justify-content: center; margin-top: 10px;">
+          SAVE PRODUCT WAND ✨
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
