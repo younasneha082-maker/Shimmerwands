@@ -998,7 +998,7 @@ async function renderFilteredStorefrontProducts() {
     productGrid.appendChild(card);
   });
 
-  initQuickViewModal();
+  initProductDetailPage();
 }
 
 function initProductFilters() {
@@ -1058,67 +1058,229 @@ function resetCatalogFilters() {
 }
 window.resetCatalogFilters = resetCatalogFilters;
 
-function initQuickViewModal() {
-  const quickViewBtns = document.querySelectorAll('.btn-quickview');
-  const modal = document.getElementById('quickview-modal');
-  const closeModalBtn = document.getElementById('close-modal-btn');
-  if (!modal) return;
+function initProductDetailPage() {
+  const pageView = document.getElementById('product-detail-view');
+  const backBtn = document.getElementById('btn-back-storefront');
+  const pageCartBtn = document.getElementById('product-page-cart-btn');
 
-  const modalImg = document.getElementById('modal-img');
-  const prevBtn = document.getElementById('quickview-prev-btn');
-  const nextBtn = document.getElementById('quickview-next-btn');
-  const dotsContainer = document.getElementById('quickview-dots');
+  if (!pageView) return;
 
-  const catEl = document.getElementById('modal-category');
-  const badgeEl = document.getElementById('modal-badge');
-  const titleEl = document.getElementById('modal-title');
-  const subEl = document.getElementById('modal-sub');
-  const priceEl = document.getElementById('modal-price');
-  const colorEl = document.getElementById('modal-color');
-  const stockEl = document.getElementById('modal-stock-status');
+  const pageImg = document.getElementById('product-page-img');
+  const prevBtn = document.getElementById('product-page-prev-btn');
+  const nextBtn = document.getElementById('product-page-next-btn');
+  const counterEl = document.getElementById('product-page-img-counter');
+  const thumbsContainer = document.getElementById('product-page-thumbnails');
 
-  const qtyMinusBtn = document.getElementById('modal-qty-minus');
-  const qtyPlusBtn = document.getElementById('modal-qty-plus');
-  const qtyValEl = document.getElementById('modal-qty-val');
-  const addBagBtn = document.getElementById('modal-add-bag');
+  const catEl = document.getElementById('product-page-category');
+  const badgeEl = document.getElementById('product-page-badge');
+  const titleEl = document.getElementById('product-page-title');
+  const subEl = document.getElementById('product-page-sub');
+  const priceEl = document.getElementById('product-page-price');
+  const stockEl = document.getElementById('product-page-stock');
+  const descEl = document.getElementById('product-page-desc');
+  const colorEl = document.getElementById('product-page-color');
+
+  const qtyMinusBtn = document.getElementById('product-page-qty-minus');
+  const qtyPlusBtn = document.getElementById('product-page-qty-plus');
+  const qtyValEl = document.getElementById('product-page-qty-val');
+  const addBagBtn = document.getElementById('product-page-add-bag');
+  const buyNowBtn = document.getElementById('product-page-buy-now');
 
   let currentGallery = [];
   let currentImgIdx = 0;
-  let currentModalQty = 1;
-  let currentActiveProduct = null;
+  let currentQty = 1;
+  let currentProduct = null;
 
-  function updateGalleryView(index) {
+  function updateGallery(index) {
     if (!currentGallery || currentGallery.length === 0) return;
     currentImgIdx = (index + currentGallery.length) % currentGallery.length;
-    if (modalImg) modalImg.src = currentGallery[currentImgIdx];
+    if (pageImg) pageImg.src = currentGallery[currentImgIdx];
+    if (counterEl) counterEl.textContent = `${currentImgIdx + 1} / ${currentGallery.length}`;
 
-    if (dotsContainer) {
-      const dots = dotsContainer.querySelectorAll('.dot');
-      dots.forEach((dot, idx) => {
-        dot.classList.toggle('active', idx === currentImgIdx);
+    if (thumbsContainer) {
+      const thumbs = thumbsContainer.querySelectorAll('.thumb-item');
+      thumbs.forEach((t, idx) => {
+        t.classList.toggle('active', idx === currentImgIdx);
       });
     }
   }
 
   if (prevBtn) {
     prevBtn.onclick = () => {
-      updateGalleryView(currentImgIdx - 1);
-      playSparkleChime();
+      updateGallery(currentImgIdx - 1);
+      if (typeof playSparkleChime === 'function') playSparkleChime();
     };
   }
 
   if (nextBtn) {
     nextBtn.onclick = () => {
-      updateGalleryView(currentImgIdx + 1);
-      playSparkleChime();
+      updateGallery(currentImgIdx + 1);
+      if (typeof playSparkleChime === 'function') playSparkleChime();
     };
   }
 
+  function closeProductDetailPage() {
+    pageView.classList.remove('open');
+    document.body.style.overflow = '';
+    if (window.location.hash && window.location.hash.startsWith('#product/')) {
+      history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
+  }
+
+  if (backBtn) backBtn.onclick = closeProductDetailPage;
+  if (pageCartBtn) pageCartBtn.onclick = () => {
+    closeProductDetailPage();
+    openCart();
+  };
+
+  window.addEventListener('popstate', () => {
+    if (!window.location.hash.startsWith('#product/')) {
+      closeProductDetailPage();
+    }
+  });
+
+  function openProductDetailPage(product) {
+    currentProduct = product;
+    currentQty = 1;
+    if (qtyValEl) qtyValEl.textContent = currentQty;
+
+    // Gallery List
+    let galleryList = [];
+    if (product.images && product.images.length > 0) {
+      galleryList = product.images;
+    } else if (product.img) {
+      galleryList = [product.img];
+    } else {
+      galleryList = ['assets/main_page_1.png'];
+    }
+    currentGallery = galleryList;
+    currentImgIdx = 0;
+
+    // Render Thumbnails
+    if (thumbsContainer) {
+      thumbsContainer.innerHTML = '';
+      if (currentGallery.length > 1) {
+        thumbsContainer.style.display = 'flex';
+        currentGallery.forEach((imgUrl, idx) => {
+          const thumb = document.createElement('div');
+          thumb.className = `thumb-item ${idx === 0 ? 'active' : ''}`;
+          thumb.innerHTML = `<img src="${imgUrl}" alt="Thumbnail ${idx + 1}">`;
+          thumb.onclick = () => {
+            updateGallery(idx);
+            if (typeof playSparkleChime === 'function') playSparkleChime();
+          };
+          thumbsContainer.appendChild(thumb);
+        });
+      } else {
+        thumbsContainer.style.display = 'none';
+      }
+    }
+
+    if (prevBtn) prevBtn.style.display = currentGallery.length > 1 ? 'flex' : 'none';
+    if (nextBtn) nextBtn.style.display = currentGallery.length > 1 ? 'flex' : 'none';
+    updateGallery(0);
+
+    // Meta & Texts
+    if (catEl) catEl.textContent = getCategoryDisplayName(product.category).toUpperCase();
+    if (badgeEl) {
+      if (product.badge) {
+        badgeEl.textContent = product.badge;
+        badgeEl.style.display = 'inline-block';
+      } else {
+        badgeEl.style.display = 'none';
+      }
+    }
+    if (titleEl) titleEl.textContent = product.title;
+    if (subEl) subEl.textContent = product.sub || 'Premium Handcrafted Wand Collection';
+    if (priceEl) priceEl.textContent = formatPKR(product.price);
+    if (colorEl) colorEl.textContent = product.color || 'Rose Gold';
+    if (descEl) descEl.textContent = product.desc || 'Handcrafted with premium AB rhinestones and ultra-soft, cruelty-free synthetic fibers. Designed for smooth, flawless application and high-durability artistry.';
+
+    const isOutOfStock = product.quantity <= 0;
+    if (stockEl) {
+      if (isOutOfStock) {
+        stockEl.textContent = 'Unavailable ❌';
+        stockEl.style.background = '#fef2f2';
+        stockEl.style.color = '#dc2626';
+        stockEl.style.borderColor = '#fca5a5';
+      } else {
+        stockEl.textContent = 'In Stock ✨';
+        stockEl.style.background = '#ecfdf5';
+        stockEl.style.color = '#047857';
+        stockEl.style.borderColor = '#a7f3d0';
+      }
+    }
+
+    // Buttons
+    if (addBagBtn) {
+      addBagBtn.disabled = isOutOfStock;
+      addBagBtn.textContent = isOutOfStock ? 'UNAVAILABLE ❌' : '+ ADD TO BAG ✨';
+      addBagBtn.onclick = () => {
+        if (isOutOfStock) return;
+        addToCart({
+          id: product.id,
+          name: product.title,
+          sub: product.sub,
+          price: parseFloat(product.price),
+          img: currentGallery[0] || product.img,
+          quantity: currentQty
+        });
+        showToast(`✨ Added ${currentQty} x ${product.title} to your bag!`);
+        if (typeof playSparkleChime === 'function') playSparkleChime();
+      };
+    }
+
+    if (buyNowBtn) {
+      buyNowBtn.disabled = isOutOfStock;
+      buyNowBtn.onclick = () => {
+        if (isOutOfStock) return;
+        addToCart({
+          id: product.id,
+          name: product.title,
+          sub: product.sub,
+          price: parseFloat(product.price),
+          img: currentGallery[0] || product.img,
+          quantity: currentQty
+        });
+        closeProductDetailPage();
+        openCart();
+      };
+    }
+
+    pageView.classList.add('open');
+    pageView.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+    window.location.hash = `#product/${product.id}`;
+    if (typeof playSparkleChime === 'function') playSparkleChime();
+  }
+
+  // Quantity Listeners
+  if (qtyMinusBtn) {
+    qtyMinusBtn.onclick = () => {
+      if (currentQty > 1) {
+        currentQty--;
+        if (qtyValEl) qtyValEl.textContent = currentQty;
+      }
+    };
+  }
+
+  if (qtyPlusBtn) {
+    qtyPlusBtn.onclick = () => {
+      const maxStock = currentProduct ? currentProduct.quantity : 99;
+      if (currentQty < maxStock) {
+        currentQty++;
+        if (qtyValEl) qtyValEl.textContent = currentQty;
+      }
+    };
+  }
+
+  // Bind Quick View Buttons & Product Card Clicks
+  const quickViewBtns = document.querySelectorAll('.btn-quickview');
   quickViewBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const card = e.target.closest('.product-card');
       if (!card) return;
-
       const prodId = card.getAttribute('data-id');
       const product = loadedStorefrontProducts.find(p => String(p.id) === String(prodId)) || {
         id: prodId,
@@ -1131,141 +1293,32 @@ function initQuickViewModal() {
         color: 'Rose Gold',
         badge: ''
       };
-
-      currentActiveProduct = product;
-      currentModalQty = 1;
-      if (qtyValEl) qtyValEl.textContent = currentModalQty;
-
-      // Clean category display name
-      if (catEl) catEl.textContent = getCategoryDisplayName(product.category).toUpperCase();
-
-      // Badge
-      if (badgeEl) {
-        if (product.badge) {
-          badgeEl.textContent = product.badge;
-          badgeEl.style.display = 'inline-block';
-        } else {
-          badgeEl.style.display = 'none';
-        }
-      }
-
-      // Title, Sub, Price, Color
-      if (titleEl) titleEl.textContent = product.title;
-      if (subEl) subEl.textContent = product.sub || '';
-      if (priceEl) priceEl.textContent = formatPKR(product.price);
-      if (colorEl) colorEl.textContent = product.color || 'Rose Gold';
-
-      // Stock Status (No unit count display)
-      const isOutOfStock = product.quantity <= 0;
-      if (stockEl) {
-        if (isOutOfStock) {
-          stockEl.textContent = 'Unavailable ❌';
-          stockEl.style.color = '#dc2626';
-        } else {
-          stockEl.textContent = 'In Stock ✨';
-          stockEl.style.color = '#047857';
-        }
-      }
-
-      // Add to Bag Button
-      if (addBagBtn) {
-        if (isOutOfStock) {
-          addBagBtn.disabled = true;
-          addBagBtn.textContent = 'UNAVAILABLE ❌';
-          addBagBtn.style.opacity = '0.5';
-          addBagBtn.style.cursor = 'not-allowed';
-        } else {
-          addBagBtn.disabled = false;
-          addBagBtn.textContent = '+ ADD TO BAG ✨';
-          addBagBtn.style.opacity = '1';
-          addBagBtn.style.cursor = 'pointer';
-        }
-      }
-
-      // Gallery Images
-      let galleryList = [];
-      if (product.images && product.images.length > 0) {
-        galleryList = product.images;
-      } else if (product.img) {
-        galleryList = [product.img];
-      } else {
-        galleryList = ['assets/main_page_1.png'];
-      }
-
-      currentGallery = galleryList;
-      currentImgIdx = 0;
-
-      if (dotsContainer) dotsContainer.innerHTML = '';
-
-      if (currentGallery.length > 1) {
-        if (prevBtn) prevBtn.style.display = 'flex';
-        if (nextBtn) nextBtn.style.display = 'flex';
-
-        currentGallery.forEach((_, idx) => {
-          const dot = document.createElement('span');
-          dot.className = `dot ${idx === 0 ? 'active' : ''}`;
-          dot.addEventListener('click', () => {
-            updateGalleryView(idx);
-            playSparkleChime();
-          });
-          if (dotsContainer) dotsContainer.appendChild(dot);
-        });
-      } else {
-        if (prevBtn) prevBtn.style.display = 'none';
-        if (nextBtn) nextBtn.style.display = 'none';
-      }
-
-      updateGalleryView(0);
-
-      modal.classList.add('open');
-      playSparkleChime();
+      openProductDetailPage(product);
     });
   });
 
-  // Quantity control listeners
-  if (qtyMinusBtn) {
-    qtyMinusBtn.onclick = () => {
-      if (currentModalQty > 1) {
-        currentModalQty--;
-        if (qtyValEl) qtyValEl.textContent = currentModalQty;
-      }
-    };
-  }
-
-  if (qtyPlusBtn) {
-    qtyPlusBtn.onclick = () => {
-      const maxStock = currentActiveProduct ? currentActiveProduct.quantity : 99;
-      if (currentModalQty < maxStock) {
-        currentModalQty++;
-        if (qtyValEl) qtyValEl.textContent = currentModalQty;
-      }
-    };
-  }
-
-  if (addBagBtn) {
-    addBagBtn.onclick = () => {
-      if (!currentActiveProduct || currentActiveProduct.quantity <= 0) return;
-
-      for (let i = 0; i < currentModalQty; i++) {
-        addToCart({
-          id: currentActiveProduct.id,
-          name: currentActiveProduct.title,
-          sub: currentActiveProduct.sub,
-          price: parseFloat(currentActiveProduct.price),
-          img: currentGallery[0] || currentActiveProduct.img
-        });
-      }
-
-      showToast(`✨ ${currentModalQty}x ${currentActiveProduct.title} added to bag!`);
-      playSparkleChime();
-      modal.classList.remove('open');
-    };
-  }
-
-  if (closeModalBtn) closeModalBtn.addEventListener('click', () => modal.classList.remove('open'));
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('open');
+  const productCards = document.querySelectorAll('.product-card');
+  productCards.forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.btn-add-bag')) return;
+      const prodId = card.getAttribute('data-id');
+      const product = loadedStorefrontProducts.find(p => String(p.id) === String(prodId)) || {
+        id: prodId,
+        title: card.querySelector('.product-title')?.textContent || 'Shimmer Wand',
+        sub: card.querySelector('.product-sub')?.textContent || '',
+        price: parseFloat((card.querySelector('.product-price')?.textContent || '0').replace(/[^0-9.]/g, '')),
+        img: card.querySelector('.product-img-wrapper img')?.getAttribute('src') || '',
+        category: card.getAttribute('data-category') || 'sets',
+        quantity: 50,
+        color: 'Rose Gold',
+        badge: ''
+      };
+      openProductDetailPage(product);
+    });
   });
+
+  window.openProductDetailPage = openProductDetailPage;
 }
 
 function initFooterModals() {

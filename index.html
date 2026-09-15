@@ -692,56 +692,95 @@
     </div>
   </div>
 
-  <!-- Quick View Modal with Multi-Image Carousel & Attribute Specs -->
-  <div id="quickview-modal" class="modal">
-    <div class="modal-content">
-      <button id="close-modal-btn" class="btn-close-modal">&times;</button>
-      
-      <!-- Left Column: Multi-Image Carousel Gallery -->
-      <div class="quickview-gallery-wrapper">
-        <div class="quickview-img-container">
-          <img id="modal-img" src="assets/main_page_1.png" alt="Product View">
-          <button id="quickview-prev-btn" class="slider-btn prev-btn modal-slider-btn prev" aria-label="Previous image">❮</button>
-          <button id="quickview-next-btn" class="slider-btn next-btn modal-slider-btn next" aria-label="Next image">❯</button>
+  <!-- Dedicated Full-Screen Product View Page -->
+  <div id="product-detail-view" class="fullscreen-product-page">
+    <!-- Sticky Product Page Header Nav -->
+    <div class="product-page-nav">
+      <button id="btn-back-storefront" class="btn-back-nav">
+        ❮ Back to Storefront
+      </button>
+      <div class="product-page-brand">
+        <span class="logo-title" style="font-size: 1.4rem; font-family: var(--font-heading); color: var(--rose-gold-dark);">Shimmerwands</span>
+      </div>
+      <button id="product-page-cart-btn" class="icon-btn" title="Shopping Bag" style="position: relative;">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </button>
+    </div>
+
+    <!-- Main Full-Screen Content -->
+    <div class="container product-page-container">
+      <!-- Left Column: Interactive Gallery & Thumbnails -->
+      <div class="product-page-gallery">
+        <div class="product-page-main-img-box">
+          <img id="product-page-img" src="assets/main_page_1.png" alt="Product Image">
+          <button id="product-page-prev-btn" class="slider-btn prev-btn modal-slider-btn prev" aria-label="Previous image">❮</button>
+          <button id="product-page-next-btn" class="slider-btn next-btn modal-slider-btn next" aria-label="Next image">❯</button>
+          <span id="product-page-img-counter" class="img-counter-badge">1 / 1</span>
         </div>
-        <div id="quickview-dots" class="modal-slider-dots"></div>
+        <div id="product-page-thumbnails" class="product-thumbnails-row"></div>
       </div>
 
-      <!-- Right Column: Database Attributes & Details -->
-      <div class="quickview-details-panel">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px;">
-          <span class="section-tag" id="modal-category">RHINESTONE WANDS</span>
-          <span id="modal-badge" class="product-badge-pill" style="display: none;">BESTSELLER</span>
+      <!-- Right Column: Product Specs & Purchase Options -->
+      <div class="product-page-details">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px;">
+          <span class="section-tag" id="product-page-category">RHINESTONE WANDS</span>
+          <span id="product-page-badge" class="product-badge-pill" style="display: none;">BESTSELLER</span>
         </div>
 
-        <h3 id="modal-title" class="product-title modal-product-title"></h3>
-        <p id="modal-sub" class="product-sub modal-product-sub"></p>
+        <h1 id="product-page-title" class="product-page-h1">Shimmer Wand</h1>
+        <p id="product-page-sub" class="product-page-sub-text">10-Piece Luxury Wand Collection</p>
 
-        <!-- Attribute Specs Cards -->
-        <div class="quickview-attrs-grid">
-          <div class="attr-pill">
-            <span class="attr-label">PRICE</span>
-            <span id="modal-price" class="attr-value modal-price-value">PKR 0.00</span>
+        <div class="product-page-price-row">
+          <span id="product-page-price" class="product-page-price-text">PKR 0.00</span>
+          <span id="product-page-stock" class="stock-status-pill">In Stock ✨</span>
+        </div>
+
+        <!-- Craftsmanship & Detailed Description -->
+        <div class="product-description-block">
+          <h3>Craftsmanship & Details</h3>
+          <p id="product-page-desc">Handcrafted with premium AB rhinestones and ultra-soft, cruelty-free synthetic fibers. Designed for smooth, flawless application and high-durability artistry.</p>
+        </div>
+
+        <!-- Specifications Grid -->
+        <div class="product-specs-grid">
+          <div class="spec-card">
+            <span class="spec-title">COLOR FINISH</span>
+            <span id="product-page-color" class="spec-value">Rose Gold</span>
           </div>
-          <div class="attr-pill">
-            <span class="attr-label">COLOR FINISH</span>
-            <span id="modal-color" class="attr-value">Rose Gold</span>
+          <div class="spec-card">
+            <span class="spec-title">BRISTLE TYPE</span>
+            <span class="spec-value">Ultra-Soft Synthetic</span>
           </div>
-          <div class="attr-pill" style="grid-column: span 2;">
-            <span class="attr-label">AVAILABILITY & STOCK</span>
-            <span id="modal-stock-status" class="attr-value" style="color: #047857;">In Stock ✨</span>
+          <div class="spec-card">
+            <span class="spec-title">HANDLE STYLE</span>
+            <span class="spec-value">Rhinestone Embedded</span>
+          </div>
+          <div class="spec-card">
+            <span class="spec-title">DURABILITY</span>
+            <span class="spec-value">Deep-Wash Tested</span>
           </div>
         </div>
 
-        <div style="margin-top: 20px; display: flex; gap: 12px; align-items: center;">
-          <div class="qty-selector">
-            <button id="modal-qty-minus" class="qty-btn">-</button>
-            <span id="modal-qty-val" class="qty-val">1</span>
-            <button id="modal-qty-plus" class="qty-btn">+</button>
+        <!-- Purchase Action Controls -->
+        <div class="product-actions-box">
+          <div class="qty-selector-large">
+            <button id="product-page-qty-minus" class="qty-btn-large">-</button>
+            <span id="product-page-qty-val" class="qty-val-large">1</span>
+            <button id="product-page-qty-plus" class="qty-btn-large">+</button>
           </div>
-          <button id="modal-add-bag" class="btn-sparkle" style="flex-grow: 1; justify-content: center;">
+          <button id="product-page-add-bag" class="btn-sparkle btn-large-purchase">
             + ADD TO BAG ✨
           </button>
+          <button id="product-page-buy-now" class="btn-secondary btn-large-purchase">
+            BUY NOW ⚡
+          </button>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="product-trust-row">
+          <div class="trust-item">🚚 <span>Free Shipping > PKR 7,500</span></div>
+          <div class="trust-item">💵 <span>Cash on Delivery</span></div>
+          <div class="trust-item">✨ <span>2-Year Guarantee</span></div>
         </div>
       </div>
     </div>
