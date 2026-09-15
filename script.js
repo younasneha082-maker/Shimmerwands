@@ -375,18 +375,17 @@ function formatPKR(amount) {
 /* ==========================================================================
    6. CART SYSTEM
    ========================================================================== */
-let cart = [
-  {
-    id: 1,
-    name: "The Royal Crown Rhinestone Set",
-    sub: "10-Piece Luxury Face & Eye Wand Set",
-    price: 148.00,
-    img: 'assets/main_page_1.png',
-    quantity: 1
-  }
-];
+let cart = [];
 
 function initCartSystem() {
+  cart = [];
+  try {
+    localStorage.removeItem('cart');
+    localStorage.removeItem('shimmer_cart');
+    sessionStorage.removeItem('cart');
+    sessionStorage.removeItem('shimmer_cart');
+  } catch (e) {}
+  updateCartUI();
   const cartBtn = document.getElementById('cart-btn');
   const cartDrawer = document.getElementById('cart-drawer');
   const cartOverlay = document.getElementById('cart-overlay');
@@ -634,6 +633,7 @@ Thank you for shopping with Shimmerwands! Beauty meets bling. ✨
 }
 
 function openCart() {
+  updateCartUI();
   document.getElementById('cart-drawer')?.classList.add('open');
   document.getElementById('cart-overlay')?.classList.add('open');
 }
@@ -719,7 +719,14 @@ function updateCartUI() {
     });
   }
 
-  if (cartBadge) cartBadge.textContent = totalItems;
+  if (cartBadge) {
+    cartBadge.textContent = totalItems;
+    if (totalItems > 0) {
+      cartBadge.style.display = 'flex';
+    } else {
+      cartBadge.style.display = 'none';
+    }
+  }
   if (cartSubtotal) cartSubtotal.textContent = formatPKR(subtotal);
 
   const freeThreshold = 7500.00;
