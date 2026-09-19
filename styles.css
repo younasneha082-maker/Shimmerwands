@@ -2723,7 +2723,7 @@ footer {
   }
 
   .product-img-wrapper {
-    height: 120px !important;
+    height: 220px !important;
   }
 
   .product-info {
@@ -2941,27 +2941,32 @@ footer {
   }
 
   .product-img-wrapper {
-    height: 115px !important;
+    height: 210px !important;
+  }
+
+  .product-img-wrapper img {
+    object-fit: cover !important;
+    object-position: center center !important;
   }
 
   .product-info {
-    padding: 6px 6px 8px 6px !important;
+    padding: 10px 10px 12px 10px !important;
   }
 
   .product-title {
-    font-size: 0.74rem !important;
-    line-height: 1.15 !important;
-    margin-bottom: 2px !important;
+    font-size: 0.78rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 4px !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
-    height: 2.3em !important;
+    height: 2.4em !important;
   }
 
   .product-sub {
-    font-size: 0.58rem !important;
-    margin-bottom: 4px !important;
+    font-size: 0.6rem !important;
+    margin-bottom: 6px !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
