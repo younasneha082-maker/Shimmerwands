@@ -93,33 +93,7 @@
 
   <!-- Hero Section -->
   <section id="hero" class="hero">
-    <div class="container hero-grid">
-      <div class="hero-content">
-        <div class="hero-tag">✨ BEAUTY MEETS BLING ✨</div>
-        <h1 class="hero-title">
-          Luxe brushes that sparkle
-          <span class="title-script" style="padding-top: 10px;">as you do.</span>
-        </h1>
-        
-        <!-- Elegant Beauty Quote Card -->
-        <div class="hero-quote-card">
-          <div class="hero-quote-text">"Where beauty meets Sparkle ✨"</div>
-        </div>
-
-        <p class="hero-description">
-          Luxe beauty brushes adorned with rhinestones, made to add a little glam to every stroke. Premium bristles designed for butter-soft application.
-        </p>
-
-        <div class="cta-group">
-          <a href="#shop" class="btn-sparkle">
-            EXPLORE COLLECTION ✨
-          </a>
-          <a href="#customizer" class="btn-secondary">
-            CUSTOM RHINESTONE 💎
-          </a>
-        </div>
-      </div>
-
+    <div class="container hero-container" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px;">
       <div class="hero-visual">
         <div class="mouse-light-sweep"></div>
 
@@ -157,40 +131,154 @@
           </div>
         </div>
       </div>
+
+      <!-- Action Buttons After Image Slider -->
+      <div class="cta-group hero-cta-bottom">
+        <a href="#shop" class="btn-sparkle">
+          EXPLORE COLLECTION ✨
+        </a>
+        <a href="#customizer" class="btn-secondary">
+          CUSTOM RHINESTONE 💎
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- Categories Section -->
-  <section class="categories-section container">
+  <!-- Products Collection Grid -->
+  <section id="shop" class="products-section container">
     <div class="section-header">
-      <div class="section-tag">CURATED CATEGORIES</div>
-      <h2 class="section-title">Shop by Brush Style</h2>
-      <div class="section-script">The Bling Categories</div>
+      <h2 class="section-title">Sparkle Brush Edits</h2>
     </div>
 
-    <div class="category-grid">
-      <div class="category-card" onclick="location.href='#shop'">
-        <div class="category-icon">👑</div>
-        <h3 class="category-title">Full Face Sets</h3>
-        <p class="category-sub">Complete 10-piece rhinestone wand sets</p>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All Wands ✨</button>
+      <button class="filter-btn" data-filter="sets">Full Sets 👑</button>
+      <button class="filter-btn" data-filter="face">Face Sculptors 💎</button>
+      <button class="filter-btn" data-filter="eye">Eye & Brow Magic ✨</button>
+      <button class="filter-btn" data-filter="lip">Lip & Detailing 🎀</button>
+    </div>
+
+    <!-- Advanced Catalog Filter & Sort Toolbar -->
+    <div class="catalog-toolbar">
+      <div class="catalog-filter-group">
+        <div class="catalog-control-item">
+          <label for="sort-products-select" class="catalog-control-label">Sort By:</label>
+          <select id="sort-products-select" class="catalog-select">
+            <option value="default">Featured Edits ✨</option>
+            <option value="price-asc">Price: Low to High ⬆️</option>
+            <option value="price-desc">Price: High to Low ⬇️</option>
+            <option value="title-asc">Name: A to Z 🔤</option>
+            <option value="title-desc">Name: Z to A 🔤</option>
+          </select>
+        </div>
+
+        <div class="catalog-control-item">
+          <label for="filter-price-select" class="catalog-control-label">Price:</label>
+          <select id="filter-price-select" class="catalog-select">
+            <option value="all">All Prices 💰</option>
+            <option value="under-500">Under PKR 500</option>
+            <option value="500-1000">PKR 500 - 1,000</option>
+            <option value="over-1000">Over PKR 1,000</option>
+          </select>
+        </div>
+
+        <div class="catalog-control-item">
+          <label for="filter-color-select" class="catalog-control-label">Color:</label>
+          <select id="filter-color-select" class="catalog-select">
+            <option value="all">All Colors ✨</option>
+            <option value="rose-gold">Rose Gold 🌸</option>
+            <option value="pink">Pink / Coquette 🎀</option>
+            <option value="silver">Silver / Crystal 💎</option>
+            <option value="gold">Gold / Champagne ✨</option>
+            <option value="black">Black / Midnight 🖤</option>
+          </select>
+        </div>
       </div>
 
-      <div class="category-card" onclick="location.href='#shop'">
-        <div class="category-icon">💎</div>
-        <h3 class="category-title">Face Sculptors</h3>
-        <p class="category-sub">Plush powder, bronzer & contour wands</p>
+      <div class="catalog-summary-bar">
+        <div id="product-count-summary" class="product-count-badge">
+          Showing 4 Wands
+        </div>
+        <button id="btn-reset-catalog-filters" class="btn-reset-filters" title="Reset all filters">
+          Reset 🔄
+        </button>
+      </div>
+    </div>
+
+    <div class="product-grid">
+      <!-- Product 1 -->
+      <div class="product-card" data-id="1" data-category="sets">
+        <span class="product-badge">BESTSELLER</span>
+        <div class="product-img-wrapper">
+          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">💎</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">ROYAL CROWN SET</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="The Royal Crown Rhinestone Set">
+          <div class="quick-view-overlay">
+            <button class="btn-quickview">Quick View ✨</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">The Royal Crown Rhinestone Set</h3>
+          <p class="product-sub">10-Piece Luxury Face & Eye Wand Bouquet</p>
+          <div class="product-price-row">
+            <span class="product-price">$148.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
       </div>
 
-      <div class="category-card" onclick="location.href='#shop'">
-        <div class="category-icon">✨</div>
-        <h3 class="category-title">Eye & Brow Magic</h3>
-        <p class="category-sub">Precision shadow & liner blenders</p>
+      <!-- Product 2 -->
+      <div class="product-card" data-id="2" data-category="sets">
+        <span class="product-badge">COQUETTE EDITION</span>
+        <div class="product-img-wrapper">
+          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">🎀</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">PINK BOW TRIO</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="Coquette Pink Bow Trio">
+          <div class="quick-view-overlay">
+            <button class="btn-quickview">Quick View ✨</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Coquette Pink Bow Trio</h3>
+          <p class="product-sub">3-Piece Cheek, Contour & Highlight Set</p>
+          <div class="product-price-row">
+            <span class="product-price">$85.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
       </div>
 
-      <div class="category-card" onclick="location.href='#shop'">
-        <div class="category-icon">🎀</div>
-        <h3 class="category-title">Lip & Detailing</h3>
-        <p class="category-sub">Concealer & lip sculpting wands</p>
+      <!-- Product 3 -->
+      <div class="product-card" data-id="3" data-category="face">
+        <span class="product-badge">NEW ARRIVAL</span>
+        <div class="product-img-wrapper">
+          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">⭐</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">CELESTIAL STARLIGHT</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="Celestial Starlight Face Wand">
+          <div class="quick-view-overlay">
+            <button class="btn-quickview">Quick View ✨</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Celestial Starlight Face Wand</h3>
+          <p class="product-sub">Ultra-Soft Foundation & Bronzer Wand</p>
+          <div class="product-price-row">
+            <span class="product-price">$42.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card" data-id="4" data-category="face">
+        <div class="product-img-wrapper">
+          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">✨</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">EMPRESS POWDER WAND</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="Empress Rose Gold Powder Wand">
+          <div class="quick-view-overlay">
+            <button class="btn-quickview">Quick View ✨</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Empress Rose Gold Powder Wand</h3>
+          <p class="product-sub">Large Fluffy Setting & Powder Brush</p>
+          <div class="product-price-row">
+            <span class="product-price">$55.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -201,7 +289,6 @@
       <div class="section-header">
         <div class="section-tag">CUSTOM BRUSH BUILDER</div>
         <h2 class="section-title">Design Your Custom Rhinestone Wand</h2>
-        <div class="section-script">Select Background & Monogram Colors</div>
       </div>
 
       <div class="customizer-card">
@@ -389,155 +476,11 @@
     </div>
   </section>
 
-  <!-- Products Collection Grid -->
-  <section id="shop" class="products-section container">
-    <div class="section-header">
-      <div class="section-tag">LUXE BEAUTY COLLECTION</div>
-      <h2 class="section-title">Sparkle Brush Edits</h2>
-      <div class="section-script">Curated for Your Artistry</div>
-    </div>
-
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">All Wands ✨</button>
-      <button class="filter-btn" data-filter="sets">Full Sets 👑</button>
-      <button class="filter-btn" data-filter="face">Face Sculptors 💎</button>
-      <button class="filter-btn" data-filter="eye">Eye & Brow Magic ✨</button>
-      <button class="filter-btn" data-filter="lip">Lip & Detailing 🎀</button>
-    </div>
-
-    <!-- Advanced Catalog Filter & Sort Toolbar -->
-    <div class="catalog-toolbar">
-      <div class="catalog-filter-group">
-        <div class="catalog-control-item">
-          <label for="sort-products-select" class="catalog-control-label">Sort By:</label>
-          <select id="sort-products-select" class="catalog-select">
-            <option value="default">Featured Edits ✨</option>
-            <option value="price-asc">Price: Low to High ⬆️</option>
-            <option value="price-desc">Price: High to Low ⬇️</option>
-            <option value="title-asc">Name: A to Z 🔤</option>
-            <option value="title-desc">Name: Z to A 🔤</option>
-          </select>
-        </div>
-
-        <div class="catalog-control-item">
-          <label for="filter-price-select" class="catalog-control-label">Price:</label>
-          <select id="filter-price-select" class="catalog-select">
-            <option value="all">All Prices 💰</option>
-            <option value="under-500">Under PKR 500</option>
-            <option value="500-1000">PKR 500 - 1,000</option>
-            <option value="over-1000">Over PKR 1,000</option>
-          </select>
-        </div>
-
-        <div class="catalog-control-item">
-          <label for="filter-color-select" class="catalog-control-label">Color:</label>
-          <select id="filter-color-select" class="catalog-select">
-            <option value="all">All Colors ✨</option>
-            <option value="rose-gold">Rose Gold 🌸</option>
-            <option value="pink">Pink / Coquette 🎀</option>
-            <option value="silver">Silver / Crystal 💎</option>
-            <option value="gold">Gold / Champagne ✨</option>
-            <option value="black">Black / Midnight 🖤</option>
-          </select>
-        </div>
-
-        <div class="catalog-control-item catalog-actions-item">
-          <button id="btn-reset-catalog-filters" class="btn-reset-filters" title="Reset all filters">
-            Reset 🔄
-          </button>
-        </div>
-      </div>
-
-      <div id="product-count-summary" class="product-count-badge">
-        Showing 4 Wands
-      </div>
-    </div>
-
-    <div class="product-grid">
-      <!-- Product 1 -->
-      <div class="product-card" data-id="1" data-category="sets">
-        <span class="product-badge">BESTSELLER</span>
-        <div class="product-img-wrapper">
-          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">💎</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">ROYAL CROWN SET</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="The Royal Crown Rhinestone Set">
-          <div class="quick-view-overlay">
-            <button class="btn-quickview">Quick View ✨</button>
-          </div>
-        </div>
-        <div class="product-info">
-          <h3 class="product-title">The Royal Crown Rhinestone Set</h3>
-          <p class="product-sub">10-Piece Luxury Face & Eye Wand Bouquet</p>
-          <div class="product-price-row">
-            <span class="product-price">$148.00</span>
-            <button class="btn-add-bag">+ ADD TO BAG</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product 2 -->
-      <div class="product-card" data-id="2" data-category="sets">
-        <span class="product-badge">COQUETTE EDITION</span>
-        <div class="product-img-wrapper">
-          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">🎀</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">PINK BOW TRIO</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="Coquette Pink Bow Trio">
-          <div class="quick-view-overlay">
-            <button class="btn-quickview">Quick View ✨</button>
-          </div>
-        </div>
-        <div class="product-info">
-          <h3 class="product-title">Coquette Pink Bow Trio</h3>
-          <p class="product-sub">3-Piece Cheek, Contour & Highlight Set</p>
-          <div class="product-price-row">
-            <span class="product-price">$85.00</span>
-            <button class="btn-add-bag">+ ADD TO BAG</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product 3 -->
-      <div class="product-card" data-id="3" data-category="face">
-        <span class="product-badge">NEW ARRIVAL</span>
-        <div class="product-img-wrapper">
-          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">⭐</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">CELESTIAL STARLIGHT</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="Celestial Starlight Face Wand">
-          <div class="quick-view-overlay">
-            <button class="btn-quickview">Quick View ✨</button>
-          </div>
-        </div>
-        <div class="product-info">
-          <h3 class="product-title">Celestial Starlight Face Wand</h3>
-          <p class="product-sub">Ultra-Soft Foundation & Bronzer Wand</p>
-          <div class="product-price-row">
-            <span class="product-price">$42.00</span>
-            <button class="btn-add-bag">+ ADD TO BAG</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product 4 -->
-      <div class="product-card" data-id="4" data-category="face">
-        <div class="product-img-wrapper">
-          <img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fff0f3"/><stop offset="50%" stop-color="%23f7d6dc"/><stop offset="100%" stop-color="%23f2e6d7"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)" rx="20"/><rect x="20" y="20" width="360" height="360" fill="none" stroke="%23d6a7a1" stroke-width="2" stroke-dasharray="6,6" rx="16"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="36" fill="%23b8736d">✨</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="%231a1a1a" letter-spacing="2">EMPRESS POWDER WAND</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="11" fill="%23b8736d">Add product image</text></svg>' alt="Empress Rose Gold Powder Wand">
-          <div class="quick-view-overlay">
-            <button class="btn-quickview">Quick View ✨</button>
-          </div>
-        </div>
-        <div class="product-info">
-          <h3 class="product-title">Empress Rose Gold Powder Wand</h3>
-          <p class="product-sub">Large Fluffy Setting & Powder Brush</p>
-          <div class="product-price-row">
-            <span class="product-price">$55.00</span>
-            <button class="btn-add-bag">+ ADD TO BAG</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Products Moodboard Section -->
   <section id="moodboard" class="moodboard-section">
     <div class="container">
       <div class="section-header">
-        <div class="section-tag">AESTHETIC INSPIRATION</div>
         <h2 class="section-title">Products Moodboard</h2>
-        <div class="section-script">Premium, Luxury & Diamond Vibe</div>
       </div>
 
       <div class="moodboard-grid">
@@ -568,6 +511,8 @@
     </div>
   </section>
 
+
+
   <!-- Storybook Section -->
   <section id="story" class="story-section">
     <div class="container story-grid">
@@ -579,11 +524,7 @@
       </div>
 
       <div class="story-content">
-        <div class="section-tag">OUR STORY</div>
-        <h2 class="section-title">Add a Little Glam to Every Stroke</h2>
-        <p style="margin: 20px 0; color: #555; font-size: 0.98rem; font-weight: 300;">
-          At Shimmerwands, we believe makeup application should feel like a magical ritual. Each wand is encrusted with high-clarity rhinestone crystals and paired with butter-soft synthetic bristles. Designed for ultimate luxury, femininity, and flawless performance.
-        </p>
+        
         <div style="display: flex; gap: 30px; margin-top: 30px;">
           <div>
             <div style="font-family: var(--font-heading); font-size: 2.2rem; color: var(--rose-gold-dark);">100%</div>
@@ -602,9 +543,7 @@
   <section id="testing" class="testing-section">
     <div class="container">
       <div class="section-header">
-        <div class="section-tag">PRECISION CRAFTSMANSHIP & RIGOR</div>
         <h2 class="section-title">Tested & Proven for Over 2 Years</h2>
-        <div class="section-script">Durable Whimsical Elegance</div>
       </div>
 
       <div class="testing-layout">
@@ -621,8 +560,7 @@
             <div class="testing-icon">🧪</div>
             <h3 class="testing-title">2+ Years Rigorously Tested</h3>
             <p class="testing-text">
-              For over two years, Shimmerwands were subjected to rigorous stress, drop, friction, and environmental wear testing across multiple methods. Engineered so rhinestones stay 100% securely set without losing crystal brilliance.
-            </p>
+              For over two years, Shimmerwands were subjected to rigorous stress, drop, friction, and environmental wear testing across multiple methods.
           </div>
 
           <!-- Card 2: Daily Usage Tested -->
@@ -631,8 +569,7 @@
             <div class="testing-icon">✨</div>
             <h3 class="testing-title">Everyday Usage Approved</h3>
             <p class="testing-text">
-              Crafted for everyday makeup application. Designed with ideal weight balance and a sleek grip that feels lightweight in your hand, making your daily beauty routine effortless and luxurious.
-            </p>
+              Crafted for everyday makeup application.      </p>
           </div>
 
           <!-- Card 3: Wash & Cleansing Tested -->
@@ -641,8 +578,7 @@
             <div class="testing-icon">🧼</div>
             <h3 class="testing-title">Washed Tested</h3>
             <p class="testing-text">
-              Tested through deep cleansing cycles with warm water and brush cleansers. Plush synthetic bristles remain ultra-soft and shed-free, while the rhinestone bond stays pristine.
-            </p>
+              Tested through deep cleansing cycles with warm water and brush cleansers.   </p>
           </div>
         </div>
       </div>
