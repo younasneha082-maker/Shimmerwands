@@ -2636,52 +2636,53 @@ footer {
     max-width: 100%;
   }
 
-  /* Responsive Catalog Filter Toolbar - Ultra Space Efficient */
+  /* Responsive Catalog Filter Toolbar - Spacious & Elegant */
   .catalog-toolbar {
     flex-direction: column;
     align-items: stretch;
-    padding: 10px 12px;
-    gap: 8px;
-    border-radius: 16px;
-    margin-bottom: 20px;
+    padding: 16px 16px;
+    gap: 14px;
+    border-radius: 18px;
+    margin-bottom: 30px;
+    background: var(--white);
+    border: 1px solid #ebd2d7;
+    box-shadow: var(--shadow-soft);
   }
 
   .catalog-filter-group {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
     width: 100%;
   }
 
   .catalog-filter-group > .catalog-control-item:first-child {
-    grid-column: span 1;
+    grid-column: 1 / -1;
   }
 
   .catalog-control-item {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 2px;
+    gap: 4px;
     width: 100%;
     min-width: 0;
   }
 
   .catalog-control-label {
-    font-size: 0.52rem;
-    letter-spacing: 0.6px;
-    margin-bottom: 1px;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     width: 100%;
   }
 
   .catalog-select {
     width: 100%;
-    padding: 6px 4px;
-    font-size: 0.68rem;
-    border-radius: 8px;
-    text-overflow: ellipsis;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    border-radius: 10px;
+    text-overflow: clip;
   }
 
   .catalog-summary-bar {
@@ -2689,14 +2690,14 @@ footer {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-top: 6px;
+    padding-top: 10px;
     border-top: 1px dashed var(--rose-gold-blush);
   }
 
   .btn-reset-filters {
-    padding: 4px 10px;
-    font-size: 0.62rem;
-    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.66rem;
+    border-radius: 10px;
   }
 
   .product-count-badge {
@@ -2704,7 +2705,7 @@ footer {
     width: auto;
     padding-top: 0;
     border-top: none;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
   }
 
   .product-grid {
@@ -2809,26 +2810,26 @@ footer {
     line-height: 1.05;
   }
 
-  /* Ultra-Compact Mobile Section Headers */
+  /* Mobile Section Headers with Spacing */
   .section-header {
-    margin-bottom: 10px;
+    margin-bottom: 24px;
   }
 
   .section-tag {
-    font-size: 0.52rem;
-    letter-spacing: 1.2px;
-    margin-bottom: 1px;
+    font-size: 0.58rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 3px;
   }
 
   .section-title {
-    font-size: 0.98rem;
+    font-size: 1.15rem;
     line-height: 1.15;
     font-weight: 600;
   }
 
   .section-script {
-    font-size: 0.95rem;
-    margin-top: 0;
+    font-size: 1.05rem;
+    margin-top: 2px;
     line-height: 1.1;
   }
 
@@ -2844,6 +2845,7 @@ footer {
     flex-direction: column;
     width: 100%;
     align-items: center;
+    margin-bottom: 24px;
   }
 
   .btn-sparkle, .btn-secondary {
@@ -2894,15 +2896,15 @@ footer {
 
   .filter-bar {
     justify-content: flex-start !important;
-    gap: 6px !important;
-    padding: 2px 4px 6px !important;
-    margin-bottom: 20px !important;
+    gap: 10px !important;
+    padding: 4px 2px 10px !important;
+    margin-bottom: 28px !important;
   }
 
   .filter-btn {
-    padding: 7px 11px !important;
-    font-size: 0.62rem !important;
-    letter-spacing: 0.5px !important;
+    padding: 8px 16px !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.8px !important;
   }
 
   .product-grid {
