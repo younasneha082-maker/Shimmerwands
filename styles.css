@@ -870,7 +870,7 @@ header {
 
 /* Custom Rhinestone Color & Monogram Builder */
 .customizer-section {
-  padding: 60px 0;
+  padding: 70px 0;
   background: #fffafb;
   border-bottom: 1px solid #f2dae0;
 }
@@ -1017,7 +1017,7 @@ header {
 
 /* Products Collection Grid */
 .products-section {
-  padding: 55px 0;
+  padding: 65px 0 75px;
   background: linear-gradient(180deg, #f8e8ea 0%, #f3dbe0 100%);
   border-top: 1px solid #ebd2d7;
   border-bottom: 1px solid #ebd2d7;
@@ -2808,6 +2808,27 @@ footer {
   .hero-title span.title-script {
     font-size: 1.35rem;
     line-height: 1.05;
+  }
+
+  /* Mobile Section Breathing Room Padding */
+  .products-section {
+    padding: 48px 0 65px !important;
+  }
+
+  .customizer-section {
+    padding: 55px 0 !important;
+  }
+
+  .moodboard-section {
+    padding: 55px 0 !important;
+  }
+
+  .story-section {
+    padding: 55px 0 !important;
+  }
+
+  .testing-section {
+    padding: 55px 0 !important;
   }
 
   /* Mobile Section Headers with Spacing */
