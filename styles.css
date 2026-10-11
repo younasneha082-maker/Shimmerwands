@@ -174,7 +174,7 @@ header {
 
 .brand-logo .logo-title {
   font-family: var(--font-high-spirited);
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   color: var(--rose-gold-dark);
   line-height: 1.05;
   font-weight: 400;
@@ -2490,6 +2490,7 @@ footer {
   .brand-logo {
     justify-self: center;
     text-align: center;
+    margin: 0 !important;
   }
 
   .nav-actions {
@@ -2497,9 +2498,9 @@ footer {
   }
   
   .brand-logo .logo-title {
-    font-size: 2.1rem;
-    line-height: 1.1;
-    padding-top: 4px;
+    font-size: 2.35rem;
+    line-height: 1.05;
+    padding-top: 2px;
   }
   
   .brand-logo .logo-subtitle {
@@ -2925,14 +2926,14 @@ footer {
   }
 
   .brand-logo .logo-title {
-    font-size: 1.45rem;
-    line-height: 1.1;
-    padding-top: 4px;
+    font-size: 2.05rem;
+    line-height: 1.05;
+    padding-top: 2px;
   }
 
   .brand-logo .logo-subtitle {
-    font-size: 0.42rem;
-    letter-spacing: 1.5px;
+    font-size: 0.46rem;
+    letter-spacing: 2px;
   }
 
   .hero-tag {
