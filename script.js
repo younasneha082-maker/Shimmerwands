@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initAudioEngine();
   await loadStorefrontProducts();
   initFooterModals();
+  initSparkleVideos();
 });
 
 /* ==========================================================================
@@ -1396,3 +1397,36 @@ function showToast(message) {
     setTimeout(() => toast.remove(), 400);
   }, 3200);
 }
+
+/* ==========================================================================
+   PRODUCT VIDEOS SHOWCASE (SILENT / NO VOLUME LOOPING CLIPS)
+   ========================================================================== */
+function initSparkleVideos() {
+  const videos = document.querySelectorAll('#product-videos video');
+  videos.forEach(v => {
+    v.muted = true;
+    v.defaultMuted = true;
+    v.volume = 0;
+
+    // Guard against any attempt to unmute or increase volume
+    v.addEventListener('volumechange', () => {
+      if (!v.muted || v.volume > 0) {
+        v.muted = true;
+        v.volume = 0;
+      }
+    });
+
+    // Tap/Click to toggle pause/play
+    v.addEventListener('click', () => {
+      if (v.paused) {
+        v.play().catch(() => {});
+      } else {
+        v.pause();
+      }
+    });
+
+    // Ensure seamless autoplay
+    v.play().catch(() => {});
+  });
+}
+

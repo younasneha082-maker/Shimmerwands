@@ -977,6 +977,15 @@ header {
   object-fit: contain;
   display: block;
   border-radius: 18px;
+  cursor: pointer;
+}
+
+.video-wrapper video::-webkit-media-controls-volume-slider,
+.video-wrapper video::-webkit-media-controls-mute-button,
+.video-wrapper video::-webkit-media-controls-volume-control-container,
+.video-wrapper video::-webkit-media-controls-panel {
+  display: none !important;
+  -webkit-appearance: none;
 }
 
 @media (max-width: 768px) {
