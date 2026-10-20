@@ -338,7 +338,7 @@ header {
   background: rgba(31, 26, 26, 0.5);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  z-index: 10000;
+  z-index: 10004;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -359,7 +359,7 @@ header {
   height: 100vh;
   height: 100dvh;
   background: var(--white);
-  z-index: 10001;
+  z-index: 10005;
   box-shadow: 15px 0 35px rgba(184, 115, 109, 0.15);
   display: flex;
   flex-direction: column;
@@ -375,40 +375,56 @@ header {
 }
 
 .mobile-nav-header {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding-bottom: 16px;
+  justify-content: center;
+  text-align: center;
+  padding: 12px 40px 16px;
   border-bottom: 1px solid var(--rose-gold-blush);
   margin-bottom: 20px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .drawer-brand-group {
   display: flex;
   flex-direction: column;
-  max-width: 190px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .drawer-logo-title {
   font-family: var(--font-high-spirited);
-  font-size: 1.8rem;
+  font-size: 2.1rem;
   color: var(--rose-gold-dark);
   line-height: 1.05;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: center;
+  width: 100%;
+  display: block;
 }
 
 .drawer-logo-sub {
   font-family: var(--font-subheading);
   font-size: 0.48rem;
-  letter-spacing: 2px;
+  letter-spacing: 2.2px;
   color: var(--rose-gold-deep);
   font-weight: 700;
+  text-align: center;
+  width: 100%;
+  display: block;
+  margin-top: 2px;
 }
 
 .btn-close-mobile {
+  position: absolute;
+  top: 10px;
+  right: 8px;
   background: var(--rose-gold-light);
   border: 1px solid var(--rose-gold-blush);
   border-radius: 50%;
@@ -2747,9 +2763,10 @@ footer {
   }
 
   .nav-wrapper {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    position: relative;
     padding: 10px 0 6px;
   }
 
@@ -2759,17 +2776,26 @@ footer {
   
   .mobile-menu-btn {
     display: flex;
-    justify-self: start;
+    z-index: 2;
   }
   
   .brand-logo {
-    justify-self: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
     margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    pointer-events: auto;
   }
 
   .nav-actions {
-    justify-self: end;
+    margin-left: auto;
+    z-index: 2;
   }
   
   .brand-logo .logo-title {
