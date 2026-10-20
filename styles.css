@@ -1932,7 +1932,7 @@ header {
 .product-page-main-img-box {
   position: relative;
   width: 100%;
-  height: 480px;
+  height: 540px;
   border-radius: 24px;
   background: #faf4f5;
   border: 1px solid var(--rose-gold-blush);
@@ -2898,7 +2898,18 @@ footer {
   }
 
   .product-page-main-img-box {
-    height: 320px !important;
+    height: 520px !important;
+    min-height: 480px !important;
+    max-height: 72vh !important;
+    border-radius: 20px !important;
+  }
+
+  .product-page-main-img-box img {
+    max-height: 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
   }
 
   .product-page-h1 {
