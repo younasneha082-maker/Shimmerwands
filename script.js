@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadStorefrontProducts();
   initFooterModals();
   initSparkleVideos();
+  initProductZoomEngine();
 });
 
 /* ==========================================================================
@@ -1095,8 +1096,19 @@ function initProductDetailPage() {
   function updateGallery(index) {
     if (!currentGallery || currentGallery.length === 0) return;
     currentImgIdx = (index + currentGallery.length) % currentGallery.length;
-    if (pageImg) pageImg.src = currentGallery[currentImgIdx];
+    if (pageImg) {
+      pageImg.src = currentGallery[currentImgIdx];
+      // Reset any active hover-zoom on slide transition
+      pageImg.style.transform = 'scale(1)';
+      pageImg.style.transformOrigin = 'center center';
+      const zoomBox = document.getElementById('product-zoom-box');
+      if (zoomBox) zoomBox.classList.remove('is-hover-zoomed');
+    }
     if (counterEl) counterEl.textContent = `${currentImgIdx + 1} / ${currentGallery.length}`;
+
+    // Expose gallery state globally for the deep zoom modal
+    window.currentProductGallery = currentGallery;
+    window.currentProductGalleryIdx = currentImgIdx;
 
     if (thumbsContainer) {
       const thumbs = thumbsContainer.querySelectorAll('.thumb-item');
@@ -1105,6 +1117,11 @@ function initProductDetailPage() {
       });
     }
   }
+
+  window.switchProductGalleryIndex = (delta) => {
+    updateGallery(currentImgIdx + delta);
+    return currentImgIdx;
+  };
 
   if (prevBtn) {
     prevBtn.onclick = () => {
@@ -1156,6 +1173,10 @@ function initProductDetailPage() {
     }
     currentGallery = galleryList;
     currentImgIdx = 0;
+
+    window.currentProductTitle = product.title || 'Shimmer Wand';
+    window.currentProductGallery = currentGallery;
+    window.currentProductGalleryIdx = 0;
 
     // Render Thumbnails
     if (thumbsContainer) {
@@ -1429,4 +1450,295 @@ function initSparkleVideos() {
     v.play().catch(() => {});
   });
 }
+
+/* ==========================================================================
+   PRODUCT ZOOM ENGINE (HOVER LENS & FULLSCREEN HD LIGHTBOX MODAL)
+   ========================================================================== */
+function initProductZoomEngine() {
+  const zoomBox = document.getElementById('product-zoom-box');
+  const pageImg = document.getElementById('product-page-img');
+  const zoomModal = document.getElementById('product-zoom-modal');
+  const zoomBackdrop = document.getElementById('zoom-backdrop');
+  const closeBtn = document.getElementById('btn-close-zoom-modal');
+  const zoomInBtn = document.getElementById('btn-zoom-in');
+  const zoomOutBtn = document.getElementById('btn-zoom-out');
+  const zoomResetBtn = document.getElementById('btn-zoom-reset');
+  const zoomViewport = document.getElementById('zoom-viewport');
+  const zoomStage = document.getElementById('zoom-image-stage');
+  const zoomImg = document.getElementById('zoom-modal-img');
+  const zoomTitle = document.getElementById('zoom-modal-title');
+  const zoomCounter = document.getElementById('zoom-img-counter');
+  const zoomPrevBtn = document.getElementById('zoom-prev-btn');
+  const zoomNextBtn = document.getElementById('zoom-next-btn');
+
+  if (!zoomBox || !pageImg || !zoomModal) return;
+
+  // 1. IN-PLACE DESKTOP HOVER ZOOM (2.2x scale tracking cursor)
+  let isHovering = false;
+
+  zoomBox.addEventListener('mouseenter', () => {
+    if (window.matchMedia('(pointer: fine)').matches) {
+      isHovering = true;
+      zoomBox.classList.add('is-hover-zoomed');
+      pageImg.style.transform = 'scale(2.2)';
+    }
+  });
+
+  zoomBox.addEventListener('mousemove', (e) => {
+    if (!isHovering) return;
+    const rect = zoomBox.getBoundingClientRect();
+    const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+    const y = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+    const xPercent = (x / rect.width) * 100;
+    const yPercent = (y / rect.height) * 100;
+
+    pageImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+  });
+
+  zoomBox.addEventListener('mouseleave', () => {
+    isHovering = false;
+    zoomBox.classList.remove('is-hover-zoomed');
+    pageImg.style.transform = 'scale(1)';
+    pageImg.style.transformOrigin = 'center center';
+  });
+
+  // 2. CLICK / TAP TO OPEN FULLSCREEN LIGHTBOX DEEP ZOOM
+  zoomBox.addEventListener('click', (e) => {
+    if (e.target.closest('#product-page-prev-btn') || e.target.closest('#product-page-next-btn')) {
+      return;
+    }
+    openZoomModal();
+  });
+
+  // Lightbox Zoom State
+  let currentZoomScale = 1.6;
+  let translateX = 0;
+  let translateY = 0;
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  let lastTouchDist = 0;
+
+  function updateZoomTransform(smooth = false) {
+    if (!zoomStage) return;
+    zoomStage.style.transition = smooth ? 'transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1)' : 'none';
+    zoomStage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentZoomScale})`;
+  }
+
+  function setZoom(scale, smooth = true) {
+    currentZoomScale = Math.min(4.0, Math.max(0.8, scale));
+    if (currentZoomScale <= 1.05) {
+      translateX = 0;
+      translateY = 0;
+    }
+    updateZoomTransform(smooth);
+  }
+
+  function openZoomModal() {
+    const gallery = window.currentProductGallery || [];
+    const idx = window.currentProductGalleryIdx || 0;
+    
+    if (gallery.length > 0 && gallery[idx]) {
+      zoomImg.src = gallery[idx];
+    } else {
+      zoomImg.src = pageImg.src;
+    }
+    
+    if (zoomTitle) {
+      zoomTitle.textContent = window.currentProductTitle || 'Sparkle Wand View';
+    }
+
+    updateZoomGalleryUI();
+
+    currentZoomScale = window.innerWidth <= 768 ? 1.4 : 1.6;
+    translateX = 0;
+    translateY = 0;
+    updateZoomTransform(false);
+
+    zoomModal.classList.add('open');
+    zoomModal.setAttribute('aria-hidden', 'false');
+    if (typeof playSparkleHarpCascade === 'function') playSparkleHarpCascade();
+  }
+
+  function closeZoomModal() {
+    zoomModal.classList.remove('open');
+    zoomModal.setAttribute('aria-hidden', 'true');
+    currentZoomScale = 1;
+    translateX = 0;
+    translateY = 0;
+    updateZoomTransform(false);
+  }
+
+  function updateZoomGalleryUI() {
+    const gallery = window.currentProductGallery || [];
+    const idx = window.currentProductGalleryIdx || 0;
+    if (zoomCounter) {
+      zoomCounter.textContent = `${idx + 1} / ${Math.max(1, gallery.length)}`;
+    }
+    if (zoomPrevBtn) zoomPrevBtn.style.display = gallery.length > 1 ? 'flex' : 'none';
+    if (zoomNextBtn) zoomNextBtn.style.display = gallery.length > 1 ? 'flex' : 'none';
+  }
+
+  // Prev / Next Gallery navigation inside Zoom Modal
+  if (zoomPrevBtn) {
+    zoomPrevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (typeof window.switchProductGalleryIndex === 'function') {
+        const newIdx = window.switchProductGalleryIndex(-1);
+        if (window.currentProductGallery && window.currentProductGallery[newIdx]) {
+          zoomImg.src = window.currentProductGallery[newIdx];
+        }
+        updateZoomGalleryUI();
+        setZoom(window.innerWidth <= 768 ? 1.4 : 1.6);
+        if (typeof playSparkleChime === 'function') playSparkleChime();
+      }
+    });
+  }
+
+  if (zoomNextBtn) {
+    zoomNextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (typeof window.switchProductGalleryIndex === 'function') {
+        const newIdx = window.switchProductGalleryIndex(1);
+        if (window.currentProductGallery && window.currentProductGallery[newIdx]) {
+          zoomImg.src = window.currentProductGallery[newIdx];
+        }
+        updateZoomGalleryUI();
+        setZoom(window.innerWidth <= 768 ? 1.4 : 1.6);
+        if (typeof playSparkleChime === 'function') playSparkleChime();
+      }
+    });
+  }
+
+  // Zoom Button Controls
+  zoomInBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setZoom(currentZoomScale + 0.4, true);
+    if (typeof playSparkleChime === 'function') playSparkleChime();
+  });
+
+  zoomOutBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setZoom(currentZoomScale - 0.4, true);
+    if (typeof playSparkleChime === 'function') playSparkleChime();
+  });
+
+  zoomResetBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    translateX = 0;
+    translateY = 0;
+    setZoom(1.0, true);
+    if (typeof playSparkleChime === 'function') playSparkleChime();
+  });
+
+  closeBtn?.addEventListener('click', closeZoomModal);
+  zoomBackdrop?.addEventListener('click', closeZoomModal);
+
+  // Keyboard navigation & Esc key
+  document.addEventListener('keydown', (e) => {
+    if (!zoomModal.classList.contains('open')) return;
+    if (e.key === 'Escape') closeZoomModal();
+    if (e.key === 'ArrowLeft' && zoomPrevBtn) zoomPrevBtn.click();
+    if (e.key === 'ArrowRight' && zoomNextBtn) zoomNextBtn.click();
+    if (e.key === '+' || e.key === '=') zoomInBtn?.click();
+    if (e.key === '-' || e.key === '_') zoomOutBtn?.click();
+  });
+
+  // Mouse Drag / Pan Logic
+  if (zoomViewport) {
+    zoomViewport.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.zoom-btn') || e.target.closest('.zoom-nav-btn')) return;
+      isDragging = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+      zoomViewport.classList.add('is-dragging');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      updateZoomTransform(false);
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        zoomViewport.classList.remove('is-dragging');
+      }
+    });
+
+    // Mouse Wheel Zoom
+    zoomViewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.25 : -0.25;
+      setZoom(currentZoomScale + delta, false);
+    }, { passive: false });
+
+    // Double Click to Toggle Zoom
+    zoomViewport.addEventListener('dblclick', (e) => {
+      if (e.target.closest('.zoom-btn') || e.target.closest('.zoom-nav-btn')) return;
+      if (currentZoomScale > 1.2) {
+        translateX = 0;
+        translateY = 0;
+        setZoom(1.0, true);
+      } else {
+        setZoom(2.4, true);
+      }
+    });
+
+    // Touch Support (Drag & Pinch-to-zoom & Double-tap)
+    let lastTap = 0;
+    zoomViewport.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX - translateX;
+        startY = e.touches[0].clientY - translateY;
+
+        const now = Date.now();
+        if (now - lastTap < 300) {
+          if (currentZoomScale > 1.2) {
+            translateX = 0;
+            translateY = 0;
+            setZoom(1.0, true);
+          } else {
+            setZoom(2.2, true);
+          }
+        }
+        lastTap = now;
+      } else if (e.touches.length === 2) {
+        isDragging = false;
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        lastTouchDist = Math.hypot(dx, dy);
+      }
+    }, { passive: true });
+
+    zoomViewport.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 1 && isDragging) {
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
+        updateZoomTransform(false);
+      } else if (e.touches.length === 2) {
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const dist = Math.hypot(dx, dy);
+        if (lastTouchDist > 0) {
+          const factor = dist / lastTouchDist;
+          setZoom(currentZoomScale * factor, false);
+        }
+        lastTouchDist = dist;
+      }
+    }, { passive: true });
+
+    zoomViewport.addEventListener('touchend', () => {
+      isDragging = false;
+      lastTouchDist = 0;
+    });
+  }
+
+  window.openProductZoomModal = openZoomModal;
+}
+
 
