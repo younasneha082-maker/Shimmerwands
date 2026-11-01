@@ -448,6 +448,29 @@ function initCartSystem() {
   const closeCheckoutModal = document.getElementById('close-checkout-modal');
   const customerForm = document.getElementById('form-customer-checkout');
 
+  const PAYMENT_NOTES = {
+    COD: '<strong>Notice:</strong> 50% will have to be sent advance, a message will be sent to u on whatsapp.',
+    EasyPaisa: '<strong>Notice:</strong> take a ss, and on whatsapp send the ss when order confirmation message comes.',
+    Bank: '<strong>Notice:</strong> take a ss, and on whatsapp send the ss when order confirmation message comes.'
+  };
+
+  // Payment radio option change handlers
+  const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
+  const paymentNoteContent = document.getElementById('payment-note-content');
+
+  paymentRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      document.querySelectorAll('.payment-card').forEach(card => card.classList.remove('active'));
+      const card = radio.closest('.payment-card');
+      if (card) card.classList.add('active');
+
+      if (paymentNoteContent && PAYMENT_NOTES[radio.value]) {
+        paymentNoteContent.innerHTML = PAYMENT_NOTES[radio.value];
+      }
+      if (typeof playSparkleChime === 'function') playSparkleChime();
+    });
+  });
+
   if (checkoutBtn && checkoutModal) {
     checkoutBtn.addEventListener('click', () => {
       if (cart.length === 0) {
@@ -456,8 +479,16 @@ function initCartSystem() {
       }
       
       const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      const deliveryFee = 250;
+      const total = subtotal + deliveryFee;
+
+      const subtotalEl = document.getElementById('checkout-subtotal');
+      const deliveryEl = document.getElementById('checkout-delivery-fee');
       const totalEl = document.getElementById('checkout-order-total');
-      if (totalEl) totalEl.textContent = formatPKR(subtotal);
+
+      if (subtotalEl) subtotalEl.textContent = formatPKR(subtotal);
+      if (deliveryEl) deliveryEl.textContent = `+ ${formatPKR(deliveryFee)}`;
+      if (totalEl) totalEl.textContent = formatPKR(total);
 
       closeCart();
       checkoutModal.classList.add('open');
@@ -480,7 +511,23 @@ function initCartSystem() {
     const phone = document.getElementById('checkout-cust-phone').value.trim();
     const address = document.getElementById('checkout-cust-address').value.trim();
 
+    const selectedPayRadio = document.querySelector('input[name="payment_method"]:checked');
+    const payMethodValue = selectedPayRadio ? selectedPayRadio.value : 'COD';
+
+    let payMethodLabel = 'Cash on Delivery (COD)';
+    let payInstructionText = '50% will have to be sent advance, a message will be sent to u on whatsapp';
+
+    if (payMethodValue === 'EasyPaisa') {
+      payMethodLabel = 'EasyPaisa';
+      payInstructionText = 'take a ss, and on whatsapp send the ss when order confirmation message comes';
+    } else if (payMethodValue === 'Bank') {
+      payMethodLabel = 'Bank Transfer';
+      payInstructionText = 'take a ss, and on whatsapp send the ss when order confirmation message comes';
+    }
+
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const deliveryFee = 250;
+    const total = subtotal + deliveryFee;
     const orderItems = cart.map(item => ({ id: item.id, name: item.name, qty: item.quantity, price: item.price }));
 
     const newOrder = {
@@ -490,7 +537,11 @@ function initCartSystem() {
       phone,
       address,
       date: new Date().toISOString().replace('T', ' ').slice(0, 16),
-      total: subtotal,
+      subtotal: subtotal,
+      deliveryFee: deliveryFee,
+      total: total,
+      paymentMethod: payMethodLabel,
+      paymentNote: payInstructionText,
       status: "Pending", // Default Pending ⏳ status
       items: orderItems
     };
@@ -525,8 +576,17 @@ function initCartSystem() {
     await loadStorefrontProducts();
 
     playSparkleHarpCascade();
-    showToast(`✨ Order ${newOrder.id} placed & emailed successfully!`);
-    alert(`✨ Thank you, ${name}! Your order ${newOrder.id} has been placed and email notification sent to shimmerwands@gmail.com! You will pay on delivery! ✨`);
+    showToast(`✨ Order #${newOrder.id} placed! Total: PKR ${total.toFixed(2)}`);
+
+    let confirmationMsg = "";
+    if (payMethodValue === 'COD') {
+      confirmationMsg = `✨ Thank you, ${name}! Your order #${newOrder.id} has been placed for PKR ${total.toFixed(2)} (including PKR 250 delivery fee)!\n\n📌 Payment: Cash on Delivery\n💬 Note: 50% will have to be sent advance, a message will be sent to u on whatsapp.\n\nEmail notification sent to shimmerwands@gmail.com! ✨`;
+    } else if (payMethodValue === 'EasyPaisa') {
+      confirmationMsg = `✨ Thank you, ${name}! Your order #${newOrder.id} has been placed for PKR ${total.toFixed(2)} (including PKR 250 delivery fee)!\n\n📌 Payment: EasyPaisa\n💬 Note: take a ss, and on whatsapp send the ss when order confirmation message comes.\n\nEmail notification sent to shimmerwands@gmail.com! ✨`;
+    } else {
+      confirmationMsg = `✨ Thank you, ${name}! Your order #${newOrder.id} has been placed for PKR ${total.toFixed(2)} (including PKR 250 delivery fee)!\n\n📌 Payment: Bank Transfer\n💬 Note: take a ss, and on whatsapp send the ss when order confirmation message comes.\n\nEmail notification sent to shimmerwands@gmail.com! ✨`;
+    }
+    alert(confirmationMsg);
 
     cart = [];
     updateCartUI();
@@ -539,7 +599,10 @@ function initCartSystem() {
 async function sendOrderEmailNotification(order) {
   try {
     const itemLines = (order.items || []).map(i => `• ${i.name} (x${i.qty}) - PKR ${(i.price * i.qty).toFixed(2)}`).join('\n');
-    const emailSubject = `✨ New Order #${order.id} from ${order.customerName}`;
+    const emailSubject = `✨ New Order #${order.id} from ${order.customerName} [${order.paymentMethod || 'Order'}]`;
+
+    const subtotalText = order.subtotal !== undefined ? order.subtotal.toFixed(2) : (order.total - 250).toFixed(2);
+    const deliveryText = order.deliveryFee !== undefined ? order.deliveryFee.toFixed(2) : '250.00';
 
     const emailMessage = `
 ✨ NEW SHIMMERWANDS ORDER RECEIVED! ✨
@@ -550,15 +613,21 @@ Date: ${order.date}
 CUSTOMER INFORMATION:
 • Full Name: ${order.customerName}
 • Email: ${order.email}
-• Contact Phone: ${order.phone}
+• Contact Phone (WhatsApp): ${order.phone}
 • Shipping Address: ${order.address}
 
 ORDER ITEMS:
 ${itemLines}
 
-ORDER TOTAL: PKR ${order.total.toFixed(2)}
-PAYMENT METHOD: Cash on Delivery (COD)
-STATUS: Pending ⏳
+ORDER FINANCIAL BREAKDOWN:
+• Items Subtotal: PKR ${subtotalText}
+• Delivery Charges: PKR ${deliveryText}
+• TOTAL PAYABLE: PKR ${order.total.toFixed(2)}
+
+PAYMENT DETAILS:
+• Payment Method: ${order.paymentMethod || 'Cash on Delivery (COD)'}
+• Payment Note: ${order.paymentNote || '50% will have to be sent advance, a message will be sent to u on whatsapp'}
+• Status: Pending ⏳
 
 Thank you for shopping with Shimmerwands! Beauty meets bling. ✨
     `.trim();

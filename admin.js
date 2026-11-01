@@ -6,6 +6,33 @@ document.addEventListener('DOMContentLoaded', () => {
   initAdminSystem();
 });
 
+// Disable right-click
+document.addEventListener("contextmenu", function (event) {
+    event.preventDefault();
+});
+
+// Disable common DevTools shortcuts
+document.addEventListener("keydown", function (event) {
+    // F12
+    if (event.key === "F12") {
+        event.preventDefault();
+    }
+
+    // Ctrl + Shift + I, J, C
+    if (
+        event.ctrlKey &&
+        event.shiftKey &&
+        ["I", "J", "C"].includes(event.key.toUpperCase())
+    ) {
+        event.preventDefault();
+    }
+
+    // Ctrl + U (View Source)
+    if (event.ctrlKey && event.key.toUpperCase() === "U") {
+        event.preventDefault();
+    }
+});
+
 /* Initial Default Data Seeds & Helpers */
 function normalizeCategory(cat) {
   if (!cat) return 'sets';
@@ -844,7 +871,15 @@ function setupOrdersTab() {
           <div style="font-size: 0.75rem; color: #666;">${order.address}</div>
         </td>
         <td data-label="Date">${order.date}</td>
-        <td data-label="Total"><strong style="color: var(--charcoal);">${formatPKR(order.total)}</strong></td>
+        <td data-label="Total">
+          <strong style="color: var(--charcoal);">${formatPKR(order.total)}</strong>
+          <div style="font-size: 0.72rem; color: #777;">Includes ${formatPKR(order.deliveryFee || 250)} delivery</div>
+          <div style="margin-top: 4px;">
+            <span style="font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: #fff0f3; color: var(--rose-gold-dark); border: 1px solid var(--rose-gold-blush);">
+              ${order.paymentMethod || 'COD'}
+            </span>
+          </div>
+        </td>
         <td data-label="Status">
           <span class="status-badge ${isPending ? 'status-pending' : 'status-done'}">
             ${isPending ? 'Pending ⏳' : 'Done ✅'}
@@ -939,8 +974,16 @@ function renderInvoice(orderId) {
     itemsBody.appendChild(tr);
   });
 
-  document.getElementById('inv-subtotal').textContent = formatPKR(order.total);
-  document.getElementById('inv-total').textContent = formatPKR(order.total);
+  const subtotal = order.subtotal !== undefined ? order.subtotal : (order.total - 250);
+  const deliveryFee = order.deliveryFee !== undefined ? order.deliveryFee : 250;
+
+  const invSubtotal = document.getElementById('inv-subtotal');
+  const invShipping = document.getElementById('inv-shipping');
+  const invTotal = document.getElementById('inv-total');
+
+  if (invSubtotal) invSubtotal.textContent = formatPKR(subtotal);
+  if (invShipping) invShipping.textContent = formatPKR(deliveryFee);
+  if (invTotal) invTotal.textContent = formatPKR(order.total);
 }
 
 /* 9. ANALYTICS REPORTS TAB */

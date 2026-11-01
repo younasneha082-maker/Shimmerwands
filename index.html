@@ -811,13 +811,58 @@
           <input type="text" id="checkout-cust-address" class="monogram-input" placeholder="House #, Street, City, Country" required>
         </div>
 
-        <div style="background: var(--rose-gold-light); border: 1px solid var(--rose-gold-blush); padding: 14px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin: 8px 0;">
-          <span style="font-family: var(--font-subheading); font-size: 0.95rem; font-weight: 700;">Order Total:</span>
-          <span id="checkout-order-total" style="font-family: var(--font-heading); font-size: 1.4rem; color: var(--rose-gold-dark); font-weight: 700;">PKR 0.00</span>
+        <!-- Payment Method Options -->
+        <div class="option-group" style="margin-top: 4px;">
+          <label style="font-size: 0.75rem; letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; display: block;">Select Payment Method *</label>
+          
+          <div class="checkout-payment-methods">
+            <label class="payment-card active" for="pay-cod">
+              <input type="radio" id="pay-cod" name="payment_method" value="COD" checked>
+              <span class="pay-icon">💵</span>
+              <span class="pay-title">Cash on Delivery</span>
+            </label>
+
+            <label class="payment-card" for="pay-easypaisa">
+              <input type="radio" id="pay-easypaisa" name="payment_method" value="EasyPaisa">
+              <span class="pay-icon">📱</span>
+              <span class="pay-title">EasyPaisa</span>
+            </label>
+
+            <label class="payment-card" for="pay-bank">
+              <input type="radio" id="pay-bank" name="payment_method" value="Bank">
+              <span class="pay-icon">🏦</span>
+              <span class="pay-title">Bank Transfer</span>
+            </label>
+          </div>
+
+          <!-- Dynamic Instruction Note Box -->
+          <div id="payment-note-box" class="checkout-note-box">
+            <span class="note-icon">💬</span>
+            <div id="payment-note-content" class="note-text">
+              <strong>Notice:</strong> 50% will have to be sent advance, a message will be sent to u on whatsapp.
+            </div>
+          </div>
         </div>
 
-        <button type="submit" class="btn-sparkle" style="width: 100%; justify-content: center;">
-          PLACE ORDER & PAY ON DELIVERY ✨
+        <!-- Order Summary Breakdown (Items Subtotal + Delivery Charges = Total) -->
+        <div class="checkout-summary-card">
+          <div class="checkout-summary-line">
+            <span>Items Subtotal:</span>
+            <span id="checkout-subtotal">PKR 0.00</span>
+          </div>
+          <div class="checkout-summary-line">
+            <span>Delivery Charges:</span>
+            <span id="checkout-delivery-fee" style="font-weight: 700; color: var(--rose-gold-dark);">+ PKR 250.00</span>
+          </div>
+          <div class="checkout-summary-hr"></div>
+          <div class="checkout-summary-line total-line">
+            <span>Total Payable:</span>
+            <span id="checkout-order-total">PKR 250.00</span>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-submit-order" class="btn-sparkle" style="width: 100%; justify-content: center; padding: 14px 20px; font-size: 0.82rem;">
+          CONFIRM & PLACE ORDER ✨
         </button>
       </form>
     </div>
