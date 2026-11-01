@@ -828,19 +828,32 @@
               <span class="pay-title">EasyPaisa</span>
             </label>
 
-            <label class="payment-card" for="pay-bank">
-              <input type="radio" id="pay-bank" name="payment_method" value="Bank">
+            <label class="payment-card disabled" for="pay-bank" title="Bank Transfer is currently unavailable">
+              <input type="radio" id="pay-bank" name="payment_method" value="Bank" disabled>
               <span class="pay-icon">🏦</span>
               <span class="pay-title">Bank Transfer</span>
+              <span class="pay-badge-disabled">Unavailable</span>
             </label>
           </div>
 
           <!-- Dynamic Instruction Note Box -->
           <div id="payment-note-box" class="checkout-note-box">
             <span class="note-icon">💬</span>
-            <div id="payment-note-content" class="note-text">
-              <strong>Notice:</strong> 50% will have to be sent advance, a message will be sent to u on whatsapp.
+            <div id="payment-note-content" style="flex: 1;">
+              <div class="note-text">
+                <strong>Notice:</strong> 50% will have to be sent advance, a message will be sent to u on whatsapp.
+              </div>
             </div>
+          </div>
+
+          <!-- Mandatory Agreement Checkbox to Proceed to Checkout -->
+          <div class="payment-ack-group" id="payment-ack-container">
+            <label class="payment-ack-label" for="checkout-note-ack">
+              <input type="checkbox" id="checkout-note-ack" required>
+              <span class="payment-ack-text" id="payment-ack-text">
+                I have read and agree to the payment note above to place my order.
+              </span>
+            </label>
           </div>
         </div>
 

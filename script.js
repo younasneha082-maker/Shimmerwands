@@ -448,18 +448,70 @@ function initCartSystem() {
   const closeCheckoutModal = document.getElementById('close-checkout-modal');
   const customerForm = document.getElementById('form-customer-checkout');
 
+  const EASYPAISA_ACCOUNT_NUMBER = '03167273525';
+
   const PAYMENT_NOTES = {
-    COD: '<strong>Notice:</strong> 50% will have to be sent advance, a message will be sent to u on whatsapp.',
-    EasyPaisa: '<strong>Notice:</strong> take a ss, and on whatsapp send the ss when order confirmation message comes.',
-    Bank: '<strong>Notice:</strong> take a ss, and on whatsapp send the ss when order confirmation message comes.'
+    COD: `<div class="note-text">
+            <strong>Notice:</strong> 50% will have to be sent advance, a message will be sent to u on whatsapp.
+          </div>`,
+    EasyPaisa: `<div class="easypaisa-info-card">
+                  <div>
+                    <div style="font-size: 0.72rem; color: #065f46; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">EasyPaisa Account:</div>
+                    <div class="easypaisa-num-badge" id="easypaisa-acc-num">${EASYPAISA_ACCOUNT_NUMBER}</div>
+                  </div>
+                  <button type="button" id="btn-copy-easypaisa" class="btn-copy-num" title="Copy EasyPaisa Number">📋 Copy Number</button>
+                </div>
+                <div class="note-text">
+                  <strong>Notice:</strong> take a ss, and on whatsapp send the ss when order confirmation message comes.
+                </div>`,
+    Bank: `<div class="note-text" style="color: #64748b;">
+             <strong>Notice:</strong> Bank Transfer is currently unavailable. Please choose Cash on Delivery or EasyPaisa.
+           </div>`
   };
 
-  // Payment radio option change handlers
+  // Payment radio option change handlers & Bank Transfer protection
   const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
   const paymentNoteContent = document.getElementById('payment-note-content');
+  const ackCheckbox = document.getElementById('checkout-note-ack');
+  const ackContainer = document.getElementById('payment-ack-container');
+  const submitOrderBtn = document.getElementById('btn-submit-order');
+
+  function syncSubmitButtonState() {
+    if (!submitOrderBtn) return;
+    const isChecked = ackCheckbox ? ackCheckbox.checked : false;
+    submitOrderBtn.disabled = !isChecked;
+    if (isChecked) {
+      submitOrderBtn.style.opacity = '1';
+      submitOrderBtn.style.cursor = 'pointer';
+      if (ackContainer) ackContainer.classList.add('has-checked');
+    } else {
+      submitOrderBtn.style.opacity = '0.52';
+      submitOrderBtn.style.cursor = 'not-allowed';
+      if (ackContainer) ackContainer.classList.remove('has-checked');
+    }
+  }
+
+  if (ackCheckbox) {
+    ackCheckbox.addEventListener('change', () => {
+      syncSubmitButtonState();
+      if (ackCheckbox.checked && typeof playSparkleChime === 'function') {
+        playSparkleChime();
+      }
+    });
+  }
+
+  // Prevent selection of unavailable Bank Transfer
+  const bankCard = document.querySelector('label[for="pay-bank"]');
+  if (bankCard) {
+    bankCard.addEventListener('click', (e) => {
+      e.preventDefault();
+      showToast("⚠️ Bank Transfer is currently unavailable. Please choose EasyPaisa or COD!");
+    });
+  }
 
   paymentRadios.forEach(radio => {
     radio.addEventListener('change', () => {
+      if (radio.disabled) return;
       document.querySelectorAll('.payment-card').forEach(card => card.classList.remove('active'));
       const card = radio.closest('.payment-card');
       if (card) card.classList.add('active');
@@ -470,6 +522,34 @@ function initCartSystem() {
       if (typeof playSparkleChime === 'function') playSparkleChime();
     });
   });
+
+  // Event delegation for copying EasyPaisa Account Number
+  if (paymentNoteContent) {
+    paymentNoteContent.addEventListener('click', async (e) => {
+      const copyBtn = e.target.closest('#btn-copy-easypaisa') || e.target.closest('.btn-copy-num');
+      if (copyBtn) {
+        e.preventDefault();
+        try {
+          await navigator.clipboard.writeText(EASYPAISA_ACCOUNT_NUMBER);
+          const originalText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '✅ Copied!';
+          copyBtn.style.background = '#10b981';
+          copyBtn.style.color = '#ffffff';
+          showToast(`📋 EasyPaisa number ${EASYPAISA_ACCOUNT_NUMBER} copied to clipboard!`);
+          setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+            copyBtn.style.background = '';
+            copyBtn.style.color = '';
+          }, 2000);
+        } catch (err) {
+          showToast(`EasyPaisa Account: ${EASYPAISA_ACCOUNT_NUMBER}`);
+        }
+      }
+    });
+  }
+
+  // Initial sync for order submit button
+  syncSubmitButtonState();
 
   if (checkoutBtn && checkoutModal) {
     checkoutBtn.addEventListener('click', () => {
@@ -490,6 +570,19 @@ function initCartSystem() {
       if (deliveryEl) deliveryEl.textContent = `+ ${formatPKR(deliveryFee)}`;
       if (totalEl) totalEl.textContent = formatPKR(total);
 
+      // Reset agreement checkbox and disabled state on every modal opening
+      if (ackCheckbox) ackCheckbox.checked = false;
+      syncSubmitButtonState();
+
+      // Ensure valid default payment selection (COD)
+      const codRadio = document.getElementById('pay-cod');
+      if (codRadio) {
+        codRadio.checked = true;
+        document.querySelectorAll('.payment-card').forEach(card => card.classList.remove('active'));
+        codRadio.closest('.payment-card')?.classList.add('active');
+        if (paymentNoteContent) paymentNoteContent.innerHTML = PAYMENT_NOTES.COD;
+      }
+
       closeCart();
       checkoutModal.classList.add('open');
       playSparkleChime();
@@ -506,20 +599,37 @@ function initCartSystem() {
   customerForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // Verify mandatory note acknowledgment
+    if (ackCheckbox && !ackCheckbox.checked) {
+      if (ackContainer) {
+        ackContainer.classList.add('shake');
+        setTimeout(() => ackContainer.classList.remove('shake'), 600);
+      }
+      showToast("⚠️ Please check the agreement box before placing your order!");
+      alert("Please read and check the agreement checkbox above to confirm you agree to the payment note.");
+      return;
+    }
+
     const name = document.getElementById('checkout-cust-name').value.trim();
     const email = document.getElementById('checkout-cust-email').value.trim();
     const phone = document.getElementById('checkout-cust-phone').value.trim();
     const address = document.getElementById('checkout-cust-address').value.trim();
 
     const selectedPayRadio = document.querySelector('input[name="payment_method"]:checked');
+    if (selectedPayRadio && selectedPayRadio.value === 'Bank') {
+      showToast("⚠️ Bank Transfer is unavailable. Please choose EasyPaisa or COD!");
+      alert("Bank Transfer is currently unavailable. Please choose Cash on Delivery or EasyPaisa.");
+      return;
+    }
+
     const payMethodValue = selectedPayRadio ? selectedPayRadio.value : 'COD';
 
     let payMethodLabel = 'Cash on Delivery (COD)';
     let payInstructionText = '50% will have to be sent advance, a message will be sent to u on whatsapp';
 
     if (payMethodValue === 'EasyPaisa') {
-      payMethodLabel = 'EasyPaisa';
-      payInstructionText = 'take a ss, and on whatsapp send the ss when order confirmation message comes';
+      payMethodLabel = 'EasyPaisa (03167273525)';
+      payInstructionText = 'take a ss, and on whatsapp send the ss when order confirmation message comes (EasyPaisa: 03167273525)';
     } else if (payMethodValue === 'Bank') {
       payMethodLabel = 'Bank Transfer';
       payInstructionText = 'take a ss, and on whatsapp send the ss when order confirmation message comes';
@@ -582,7 +692,7 @@ function initCartSystem() {
     if (payMethodValue === 'COD') {
       confirmationMsg = `✨ Thank you, ${name}! Your order #${newOrder.id} has been placed for PKR ${total.toFixed(2)} (including PKR 250 delivery fee)!\n\n📌 Payment: Cash on Delivery\n💬 Note: 50% will have to be sent advance, a message will be sent to u on whatsapp.\n\nEmail notification sent to shimmerwands@gmail.com! ✨`;
     } else if (payMethodValue === 'EasyPaisa') {
-      confirmationMsg = `✨ Thank you, ${name}! Your order #${newOrder.id} has been placed for PKR ${total.toFixed(2)} (including PKR 250 delivery fee)!\n\n📌 Payment: EasyPaisa\n💬 Note: take a ss, and on whatsapp send the ss when order confirmation message comes.\n\nEmail notification sent to shimmerwands@gmail.com! ✨`;
+      confirmationMsg = `✨ Thank you, ${name}! Your order #${newOrder.id} has been placed for PKR ${total.toFixed(2)} (including PKR 250 delivery fee)!\n\n📌 Payment: EasyPaisa (Account: 03167273525)\n💬 Note: take a ss, and on whatsapp send the ss when order confirmation message comes.\n\nEmail notification sent to shimmerwands@gmail.com! ✨`;
     } else {
       confirmationMsg = `✨ Thank you, ${name}! Your order #${newOrder.id} has been placed for PKR ${total.toFixed(2)} (including PKR 250 delivery fee)!\n\n📌 Payment: Bank Transfer\n💬 Note: take a ss, and on whatsapp send the ss when order confirmation message comes.\n\nEmail notification sent to shimmerwands@gmail.com! ✨`;
     }

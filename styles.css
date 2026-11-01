@@ -3628,6 +3628,135 @@ footer {
   color: var(--rose-gold-dark);
 }
 
+.payment-card.disabled {
+  opacity: 0.52;
+  cursor: not-allowed !important;
+  background: #f8fafc;
+  border-style: dashed;
+  border-color: #cbd5e1;
+}
+
+.payment-card.disabled:hover {
+  transform: none;
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.pay-badge-disabled {
+  font-size: 0.58rem;
+  background: #e2e8f0;
+  color: #64748b;
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* EasyPaisa Transfer Card inside Note */
+.easypaisa-info-card {
+  background: #ffffff;
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.08);
+}
+
+.easypaisa-num-badge {
+  font-family: monospace, var(--font-subheading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #047857;
+  letter-spacing: 1.5px;
+  user-select: all;
+}
+
+.btn-copy-num {
+  background: #ecfdf5;
+  border: 1px solid #10b981;
+  color: #047857;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-copy-num:hover {
+  background: #10b981;
+  color: #ffffff;
+}
+
+/* Mandatory Agreement Checkbox */
+.payment-ack-group {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1.5px dashed var(--rose-gold-blush);
+  border-radius: 12px;
+  transition: all 0.22s ease;
+}
+
+.payment-ack-group.has-checked {
+  border-color: var(--rose-gold-dark);
+  border-style: solid;
+  background: #fff6f7;
+  box-shadow: 0 2px 8px rgba(184, 115, 109, 0.12);
+}
+
+.payment-ack-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  width: 100%;
+  user-select: none;
+}
+
+.payment-ack-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--rose-gold-dark);
+  cursor: pointer;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.payment-ack-text {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--charcoal);
+  font-weight: 600;
+}
+
+#btn-submit-order:disabled {
+  opacity: 0.52 !important;
+  cursor: not-allowed !important;
+  pointer-events: auto;
+  filter: grayscale(0.2);
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+@keyframes ackShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.payment-ack-group.shake {
+  animation: ackShake 0.4s ease;
+  border-color: #ef4444 !important;
+}
+
 /* Dynamic Callout Note */
 .checkout-note-box {
   display: flex;
