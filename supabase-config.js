@@ -4,7 +4,32 @@
 
 const SUPABASE_URL = 'https://xibjcvlfnaqrizbfikdz.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_-Ngwy0QjSxyTFPlAfw_7VA_aVX8QsMy';
+// Disable right-click
+document.addEventListener("contextmenu", function (event) {
+    event.preventDefault();
+});
 
+// Disable common DevTools shortcuts
+document.addEventListener("keydown", function (event) {
+    // F12
+    if (event.key === "F12") {
+        event.preventDefault();
+    }
+
+    // Ctrl + Shift + I, J, C
+    if (
+        event.ctrlKey &&
+        event.shiftKey &&
+        ["I", "J", "C"].includes(event.key.toUpperCase())
+    ) {
+        event.preventDefault();
+    }
+
+    // Ctrl + U (View Source)
+    if (event.ctrlKey && event.key.toUpperCase() === "U") {
+        event.preventDefault();
+    }
+});
 let db = null;
 
 if (typeof window.supabase !== 'undefined' && SUPABASE_URL && SUPABASE_ANON_KEY) {
