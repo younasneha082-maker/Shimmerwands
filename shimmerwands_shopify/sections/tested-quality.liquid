@@ -1,0 +1,75 @@
+﻿<section id="testing" class="testing-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">{{ section.settings.heading | default: 'Tested & Proven for Over 2 Years' }}</h2>
+    </div>
+
+    <div class="testing-layout">
+      <!-- Visual Proof Showcase Card -->
+      <div class="testing-visual-card">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.heading | escape }}" class="testing-img">
+        {%- else -%}
+          <img src="{{ 'testing_asset_1.png' | asset_url }}" alt="Washed, Loved, Proven - Shimmerwands Rigorous Testing" class="testing-img">
+        {%- endif -%}
+      </div>
+
+      <!-- Testing Pillars Column -->
+      <div class="testing-cards-col">
+        <!-- Card 1: 2+ Years Testing -->
+        <div class="testing-card">
+          <div class="testing-badge">LAB & ARTISTRY TESTED</div>
+          <div class="testing-icon">🧪</div>
+          <h3 class="testing-title">2+ Years Rigorously Tested</h3>
+          <p class="testing-text">
+            For over two years, Shimmerwands were subjected to rigorous stress, drop, friction, and environmental wear testing across multiple methods.
+          </p>
+        </div>
+
+        <!-- Card 2: Daily Usage Tested -->
+        <div class="testing-card">
+          <div class="testing-badge">ERGONOMIC COMFORT</div>
+          <div class="testing-icon">✨</div>
+          <h3 class="testing-title">Everyday Usage Approved</h3>
+          <p class="testing-text">
+            Crafted for everyday makeup application. Balanced weight distribution ensures precision blending without hand fatigue.
+          </p>
+        </div>
+
+        <!-- Card 3: Wash & Cleansing Tested -->
+        <div class="testing-card">
+          <div class="testing-badge">DEEP WASH PROVEN</div>
+          <div class="testing-icon">🧼</div>
+          <h3 class="testing-title">Washed Tested</h3>
+          <p class="testing-text">
+            Tested through deep cleansing cycles with warm water and brush cleansers. Water-resistant jewel bonding ensures rhinestones stay locked in place.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tested Quality",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tested & Proven for Over 2 Years"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Showcase Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tested Quality"
+    }
+  ]
+}
+{% endschema %}

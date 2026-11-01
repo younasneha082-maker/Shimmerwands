@@ -1,0 +1,62 @@
+﻿<footer>
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="logo-title">{{ section.settings.brand_title | default: 'Shimmerwands' }}</div>
+      <p>{{ section.settings.brand_desc | default: 'Luxe beauty brushes adorned with rhinestones, made to add a little glam to every stroke. Beauty meets bling.' }}</p>
+      <p style="margin-top: 10px; color: var(--rose-gold);">Follow the sparkle @shimmerwands</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>SHOP</h4>
+      <ul>
+        <li><a href="#shop">The Bling Edit</a></li>
+        <li><a href="#shop">Full Brush Sets</a></li>
+        <li><a href="#customizer">Custom Rhinestone Builder</a></li>
+        <li><a href="#discount">Gift Cards</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>BRAND</h4>
+      <ul>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#testing">Tested Quality</a></li>
+        <li><a href="#moodboard">Products Moodboard</a></li>
+        <li><a href="#testing">Rhinestone Care</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>HELP & SUPPORT</h4>
+      <ul>
+        <li><a href="#" id="footer-track-btn">Track Order</a></li>
+        <li><a href="#" id="footer-returns-btn">Returns & Exchanges</a></li>
+        <li><a href="#" id="footer-contact-btn">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All Rights Reserved. Designed with Whimsical Sparkle & Bling.
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_title",
+      "label": "Brand Title",
+      "default": "Shimmerwands"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_desc",
+      "label": "Brand Description",
+      "default": "Luxe beauty brushes adorned with rhinestones, made to add a little glam to every stroke. Beauty meets bling."
+    }
+  ]
+}
+{% endschema %}

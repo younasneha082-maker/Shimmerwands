@@ -1,0 +1,32 @@
+﻿{
+  "general": {
+    "accessibility": {
+      "close": "Close",
+      "skip_to_content": "Skip to content"
+    },
+    "currency": "PKR",
+    "share": "Share",
+    "social": {
+      "instagram": "Instagram",
+      "tiktok": "TikTok"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "+ ADD TO BAG ✨",
+      "sold_out": "UNAVAILABLE",
+      "unavailable": "Unavailable ❌",
+      "in_stock": "In Stock ✨",
+      "quick_view": "Quick View ✨",
+      "quantity": "Quantity"
+    }
+  },
+  "cart": {
+    "title": "Your Sparkle Bag ✨",
+    "empty": "Your bag is empty",
+    "subtotal": "SUBTOTAL:",
+    "checkout": "PROCEED TO CHECKOUT ✨",
+    "free_shipping_notice": "Add {{ amount }} more for FREE Shipping! ✨",
+    "free_shipping_unlocked": "You have unlocked FREE Shipping! ✨"
+  }
+}

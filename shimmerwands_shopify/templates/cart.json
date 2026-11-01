@@ -1,0 +1,13 @@
+﻿{
+  "sections": {
+    "main": {
+      "type": "product-grid",
+      "settings": {
+        "heading": "Explore Sparkle Wands"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

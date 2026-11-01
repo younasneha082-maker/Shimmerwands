@@ -16,6 +16,33 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadStorefrontProducts();
 });
 
+// Disable right-click
+document.addEventListener("contextmenu", function (event) {
+    event.preventDefault();
+});
+
+// Disable common DevTools shortcuts
+document.addEventListener("keydown", function (event) {
+    // F12
+    if (event.key === "F12") {
+        event.preventDefault();
+    }
+
+    // Ctrl + Shift + I, J, C
+    if (
+        event.ctrlKey &&
+        event.shiftKey &&
+        ["I", "J", "C"].includes(event.key.toUpperCase())
+    ) {
+        event.preventDefault();
+    }
+
+    // Ctrl + U (View Source)
+    if (event.ctrlKey && event.key.toUpperCase() === "U") {
+        event.preventDefault();
+    }
+});
+
 /* ==========================================================================
    1. HERO MULTI-IMAGE SLIDER (assets/main_page_1.png to main_page_5.png)
    ========================================================================== */

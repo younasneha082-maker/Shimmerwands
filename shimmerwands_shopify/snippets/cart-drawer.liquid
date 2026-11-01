@@ -1,0 +1,37 @@
+﻿{% comment %}
+  Slide-out AJAX Cart Drawer with Dynamic Free Shipping Progress
+{% endcomment %}
+<div id="cart-overlay" class="cart-overlay"></div>
+<div id="cart-drawer" class="cart-drawer">
+  <div class="cart-header">
+    <div class="cart-title">Your Sparkle Bag ✨</div>
+    <button id="close-cart-btn" class="btn-close-cart" aria-label="Close Bag">&times;</button>
+  </div>
+
+  <div class="cart-body" id="cart-body-items">
+    <!-- Populated dynamically via AJAX /cart.js -->
+    <div style="text-align: center; padding: 40px 20px; color: #888;">
+      <div style="font-size: 2.5rem; margin-bottom: 12px;">🛍️</div>
+      <p style="font-family: var(--font-heading); font-size: 1.2rem; color: var(--charcoal); margin-bottom: 6px;">Your bag is empty</p>
+      <p style="font-size: 0.85rem;">Discover our handcrafted rhinestone wands.</p>
+    </div>
+  </div>
+
+  <div class="cart-footer">
+    <div id="shipping-progress-text" class="shipping-progress">
+      Add more for <strong>FREE Shipping</strong>! ✨
+    </div>
+    <div class="progress-bar-bg">
+      <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+    </div>
+
+    <div class="cart-total-row">
+      <span>SUBTOTAL:</span>
+      <span id="cart-subtotal">{{ cart.total_price | money }}</span>
+    </div>
+
+    <a href="/checkout" id="btn-checkout" class="btn-sparkle" style="width: 100%; justify-content: center; text-decoration: none; text-align: center;">
+      PROCEED TO CHECKOUT ✨
+    </a>
+  </div>
+</div>

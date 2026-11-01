@@ -1,0 +1,76 @@
+﻿{
+  "sections": {
+    "hero_slider": {
+      "type": "hero-slider",
+      "settings": {
+        "primary_cta_text": "EXPLORE COLLECTION ✨",
+        "primary_cta_link": "#shop",
+        "secondary_cta_text": "CUSTOM RHINESTONE 💎",
+        "secondary_cta_link": "#customizer"
+      }
+    },
+    "product_grid": {
+      "type": "product-grid",
+      "settings": {
+        "section_tag": "SPARKLING COLLECTION",
+        "heading": "Sparkle Brush Edits",
+        "products_to_show": 12
+      }
+    },
+    "video_showcase": {
+      "type": "video-showcase",
+      "settings": {
+        "section_tag": "SPARKLE IN MOTION",
+        "heading": "Watch Our Wands in Action ✨"
+      }
+    },
+    "wand_customizer": {
+      "type": "wand-customizer",
+      "settings": {
+        "section_tag": "CUSTOM BRUSH BUILDER",
+        "heading": "Design Your Custom Rhinestone Wand"
+      }
+    },
+    "moodboard": {
+      "type": "moodboard",
+      "settings": {
+        "heading": "Products Moodboard"
+      }
+    },
+    "brand_story": {
+      "type": "brand-story",
+      "settings": {
+        "tag": "OUR STORY & ARTISTRY",
+        "heading": "Crafted for the Glamorous",
+        "quote": "Beauty meets bling.",
+        "stat1_num": "100%",
+        "stat1_label": "Rhinestone Elegance",
+        "stat2_num": "50K+",
+        "stat2_label": "Sparkling Beauties Worldwide"
+      }
+    },
+    "tested_quality": {
+      "type": "tested-quality",
+      "settings": {
+        "heading": "Tested & Proven for Over 2 Years"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "tag": "SPARKLE CLUB VIP",
+        "heading": "Get 5% Off On Your First Wand Order"
+      }
+    }
+  },
+  "order": [
+    "hero_slider",
+    "product_grid",
+    "video_showcase",
+    "wand_customizer",
+    "moodboard",
+    "brand_story",
+    "tested_quality",
+    "newsletter"
+  ]
+}

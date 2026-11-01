@@ -1,0 +1,71 @@
+﻿{% comment %}
+  Renders a luxury Shimmerwands product card
+  Accepts:
+  - product: {Object} Shopify Product object
+{% endcomment %}
+
+{%- assign is_out_of_stock = true -%}
+{%- if product.available -%}
+  {%- assign is_out_of_stock = false -%}
+{%- endif -%}
+
+<div class="product-card" data-id="{{ product.id }}" data-category="{{ product.type | handleize }}">
+  {%- if product.tags contains 'bestseller' or product.tags contains 'Bestseller' -%}
+    <span class="product-badge">BESTSELLER</span>
+  {%- elsif product.tags contains 'new' or product.tags contains 'New' -%}
+    <span class="product-badge">NEW ARRIVAL</span>
+  {%- elsif product.tags contains 'coquette' or product.tags contains 'Coquette' -%}
+    <span class="product-badge">COQUETTE EDITION</span>
+  {%- endif -%}
+
+  <div class="product-img-wrapper">
+    {%- if product.featured_image -%}
+      <img 
+        src="{{ product.featured_image | image_url: width: 600 }}" 
+        alt="{{ product.title | escape }}" 
+        loading="lazy"
+        width="400"
+        height="400"
+      >
+    {%- else -%}
+      <img src="{{ 'main_page_1.png' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy">
+    {%- endif -%}
+
+    <div class="quick-view-overlay">
+      <a href="{{ product.url }}" class="btn-quickview">View Wand ✨</a>
+    </div>
+  </div>
+
+  <div class="product-info">
+    <div style="font-size: 0.68rem; color: var(--rose-gold-dark); letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">
+      {{ product.type | default: 'RHINESTONE WANDS' }}
+    </div>
+    <h3 class="product-title">
+      <a href="{{ product.url }}" style="color: inherit; text-decoration: none;">{{ product.title }}</a>
+    </h3>
+    {%- if product.description != blank -%}
+      <p class="product-sub">{{ product.description | strip_html | truncatewords: 8 }}</p>
+    {%- endif -%}
+    
+    <div style="font-size: 0.75rem; color: {% if is_out_of_stock %}#dc2626{% else %}#047857{% endif %}; font-weight: 700; margin-bottom: 6px;">
+      {% if is_out_of_stock %}Unavailable ❌{% else %}In Stock ✨{% endif %}
+    </div>
+
+    <div class="product-price-row">
+      <span class="product-price">{{ product.price | money }}</span>
+      {%- if product.available -%}
+        <button 
+          type="button" 
+          class="btn-add-bag btn-ajax-add" 
+          data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+        >
+          + ADD TO BAG
+        </button>
+      {%- else -%}
+        <button type="button" class="btn-add-bag" disabled style="opacity: 0.5; cursor: not-allowed;">
+          UNAVAILABLE
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

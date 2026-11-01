@@ -1,0 +1,114 @@
+﻿<header>
+  <div class="container nav-wrapper">
+    <!-- Mobile Hamburger Button -->
+    <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Mobile Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Brand Logo -->
+    <a href="{{ routes.root_url }}" class="brand-logo">
+      {%- if section.settings.logo != blank -%}
+        <img 
+          src="{{ section.settings.logo | image_url: width: 300 }}" 
+          alt="{{ shop.name | escape }}"
+          style="max-height: 46px; object-fit: contain;"
+        >
+      {%- else -%}
+        <span class="logo-title">{{ section.settings.logo_title | default: shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <ul class="nav-links">
+      {%- if section.settings.menu != blank -%}
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {%- endfor -%}
+      {%- else -%}
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#product-videos">Videos</a></li>
+        <li><a href="#customizer">Customizer</a></li>
+        <li><a href="#moodboard">Moodboard</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#testing">Tested Quality</a></li>
+      {%- endif -%}
+    </ul>
+
+    <!-- Nav Actions (Sound Toggle & Shopping Bag) -->
+    <div class="nav-actions">
+      <button id="sound-toggle-btn" class="icon-btn" title="Toggle Interactive Sound">
+        🔊
+      </button>
+      
+      <button id="cart-btn" class="icon-btn" title="Shopping Bag">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span id="cart-badge" class="cart-badge" {% if cart.item_count == 0 %}style="display: none;"{% endif %}>{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Overlay Backdrop -->
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobile-nav-drawer" class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <div class="drawer-brand-group">
+        <span class="drawer-logo-title">{{ section.settings.logo_title | default: 'Shimmerwands' }}</span>
+        <span class="drawer-logo-sub">BEAUTY MEETS BLING</span>
+      </div>
+      <button id="close-mobile-menu" class="btn-close-mobile" aria-label="Close Mobile Menu">&times;</button>
+    </div>
+    
+    <ul class="mobile-nav-links">
+      {%- if section.settings.menu != blank -%}
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li><a href="{{ link.url }}" class="mobile-nav-link"><span>{{ link.title }}</span> <span>✨</span></a></li>
+        {%- endfor -%}
+      {%- else -%}
+        <li><a href="#hero" class="mobile-nav-link"><span>Home</span> <span>✨</span></a></li>
+        <li><a href="#shop" class="mobile-nav-link"><span>Shop Collection</span> <span>🛍️</span></a></li>
+        <li><a href="#product-videos" class="mobile-nav-link"><span>Watch Videos</span> <span>🎬</span></a></li>
+        <li><a href="#customizer" class="mobile-nav-link"><span>Customizer</span> <span>💎</span></a></li>
+        <li><a href="#moodboard" class="mobile-nav-link"><span>Products Moodboard</span> <span>🖼️</span></a></li>
+        <li><a href="#story" class="mobile-nav-link"><span>Our Story</span> <span>📖</span></a></li>
+        <li><a href="#testing" class="mobile-nav-link"><span>Tested Quality</span> <span>⭐</span></a></li>
+      {%- endif -%}
+    </ul>
+
+    <div class="mobile-nav-footer">
+      <a href="#customizer" class="btn-sparkle" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.72rem;">
+        DESIGN YOUR WAND ✨
+      </a>
+      <p style="font-size: 0.72rem; color: #777;">Support: <a href="mailto:shimmerwands@gmail.com" style="color: var(--rose-gold-dark); font-weight: 600; text-decoration: none;">shimmerwands@gmail.com</a></p>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_title",
+      "label": "Brand Logo Text",
+      "default": "Shimmerwands"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Brand Logo Image (Optional)"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

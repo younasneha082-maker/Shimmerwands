@@ -1,0 +1,84 @@
+﻿<section id="moodboard" class="moodboard-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">{{ section.settings.heading | default: 'Products Moodboard' }}</h2>
+    </div>
+
+    <div class="moodboard-grid">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="mood-card" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}">
+            {%- else -%}
+              <img src="{{ 'premium_quality.png' | asset_url }}" alt="Moodboard">
+            {%- endif -%}
+            <div class="mood-card-content">
+              <div class="mood-title">{{ block.settings.title }}</div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Default 3 Moodboard Cards -->
+        <div class="mood-card">
+          <img src="{{ 'premium_quality.png' | asset_url }}" alt="Premium Quality Moodboard">
+          <div class="mood-card-content">
+            <div class="mood-title">PREMIUM QUALITY</div>
+          </div>
+        </div>
+
+        <div class="mood-card">
+          <img src="{{ 'luxury.png' | asset_url }}" alt="Luxury Vibe Moodboard">
+          <div class="mood-card-content">
+            <div class="mood-title">LUXURY VIBE</div>
+          </div>
+        </div>
+
+        <div class="mood-card">
+          <img src="{{ 'diamond_crystal_shine.png' | asset_url }}" alt="Diamond Crystal Shine Moodboard">
+          <div class="mood-card-content">
+            <div class="mood-title">DIAMOND CRYSTAL SHINE</div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Moodboard",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Products Moodboard"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Moodboard Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "PREMIUM QUALITY"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moodboard"
+    }
+  ]
+}
+{% endschema %}

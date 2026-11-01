@@ -1,0 +1,185 @@
+﻿<section id="shop" class="products-section container">
+  <div class="section-header">
+    <span class="section-tag">{{ section.settings.section_tag | default: 'SPARKLING COLLECTION' }}</span>
+    <h2 class="section-title">{{ section.settings.heading | default: 'Sparkle Brush Edits' }}</h2>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All Wands ✨</button>
+    <button class="filter-btn" data-filter="sets">Full Sets 👑</button>
+    <button class="filter-btn" data-filter="face">Face Sculptors 💎</button>
+    <button class="filter-btn" data-filter="eye">Eye & Brow Magic ✨</button>
+    <button class="filter-btn" data-filter="lip">Lip & Detailing 🎀</button>
+  </div>
+
+  <!-- Advanced Catalog Filter & Sort Toolbar -->
+  <div class="catalog-toolbar">
+    <div class="catalog-filter-group">
+      <div class="catalog-control-item">
+        <label for="sort-products-select" class="catalog-control-label">Sort By:</label>
+        <select id="sort-products-select" class="catalog-select">
+          <option value="default">Featured Edits ✨</option>
+          <option value="price-asc">Price: Low to High ⬆️</option>
+          <option value="price-desc">Price: High to Low ⬇️</option>
+          <option value="title-asc">Name: A to Z 🔤</option>
+          <option value="title-desc">Name: Z to A 🔤</option>
+        </select>
+      </div>
+
+      <div class="catalog-control-item">
+        <label for="filter-price-select" class="catalog-control-label">Price:</label>
+        <select id="filter-price-select" class="catalog-select">
+          <option value="all">All Prices 💰</option>
+          <option value="under-500">Under PKR 500</option>
+          <option value="500-1000">PKR 500 - 1,000</option>
+          <option value="over-1000">Over PKR 1,000</option>
+        </select>
+      </div>
+
+      <div class="catalog-control-item">
+        <label for="filter-color-select" class="catalog-control-label">Color:</label>
+        <select id="filter-color-select" class="catalog-select">
+          <option value="all">All Colors ✨</option>
+          <option value="rose-gold">Rose Gold 🌸</option>
+          <option value="pink">Pink / Coquette 🎀</option>
+          <option value="silver">Silver / Crystal 💎</option>
+          <option value="gold">Gold / Champagne ✨</option>
+          <option value="black">Black / Midnight 🖤</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="catalog-summary-bar">
+      <div id="product-count-summary" class="product-count-badge">
+        Showing Wands
+      </div>
+      <button id="btn-reset-catalog-filters" class="btn-reset-filters" title="Reset all filters">
+        Reset 🔄
+      </button>
+    </div>
+  </div>
+
+  <div class="product-grid">
+    {%- assign target_collection = collections[section.settings.collection] -%}
+    {%- if target_collection != blank and target_collection.products.size > 0 -%}
+      {%- for product in target_collection.products limit: section.settings.products_to_show -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    {%- elsif collections['all'] != blank and collections['all'].products.size > 0 -%}
+      {%- for product in collections['all'].products limit: section.settings.products_to_show -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Default Storefront Showcase if collection is empty -->
+      <div class="product-card" data-id="1" data-category="sets">
+        <span class="product-badge">BESTSELLER</span>
+        <div class="product-img-wrapper">
+          <img src="{{ 'main_page_1.png' | asset_url }}" alt="The Royal Crown Rhinestone Set">
+          <div class="quick-view-overlay"><a href="#shop" class="btn-quickview">View Wand ✨</a></div>
+        </div>
+        <div class="product-info">
+          <div style="font-size: 0.68rem; color: var(--rose-gold-dark); letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">RHINESTONE SETS</div>
+          <h3 class="product-title">The Royal Crown Rhinestone Set</h3>
+          <p class="product-sub">10-Piece Luxury Face & Eye Wand Bouquet</p>
+          <div style="font-size: 0.75rem; color: #047857; font-weight: 700; margin-bottom: 6px;">In Stock ✨</div>
+          <div class="product-price-row">
+            <span class="product-price">PKR 14,800.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-id="2" data-category="sets">
+        <span class="product-badge">COQUETTE EDITION</span>
+        <div class="product-img-wrapper">
+          <img src="{{ 'main_page_2.png' | asset_url }}" alt="Coquette Pink Bow Trio">
+          <div class="quick-view-overlay"><a href="#shop" class="btn-quickview">View Wand ✨</a></div>
+        </div>
+        <div class="product-info">
+          <div style="font-size: 0.68rem; color: var(--rose-gold-dark); letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">CHEEK & GLOW</div>
+          <h3 class="product-title">Coquette Pink Bow Trio</h3>
+          <p class="product-sub">3-Piece Cheek, Contour & Highlight Set</p>
+          <div style="font-size: 0.75rem; color: #047857; font-weight: 700; margin-bottom: 6px;">In Stock ✨</div>
+          <div class="product-price-row">
+            <span class="product-price">PKR 8,500.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-id="3" data-category="face">
+        <span class="product-badge">NEW ARRIVAL</span>
+        <div class="product-img-wrapper">
+          <img src="{{ 'main_page_3.png' | asset_url }}" alt="Celestial Starlight Face Wand">
+          <div class="quick-view-overlay"><a href="#shop" class="btn-quickview">View Wand ✨</a></div>
+        </div>
+        <div class="product-info">
+          <div style="font-size: 0.68rem; color: var(--rose-gold-dark); letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">FACE SCULPTOR</div>
+          <h3 class="product-title">Celestial Starlight Face Wand</h3>
+          <p class="product-sub">Ultra-Soft Foundation & Bronzer Wand</p>
+          <div style="font-size: 0.75rem; color: #047857; font-weight: 700; margin-bottom: 6px;">In Stock ✨</div>
+          <div class="product-price-row">
+            <span class="product-price">PKR 4,200.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-id="4" data-category="face">
+        <div class="product-img-wrapper">
+          <img src="{{ 'main_page_4.png' | asset_url }}" alt="Empress Rose Gold Powder Wand">
+          <div class="quick-view-overlay"><a href="#shop" class="btn-quickview">View Wand ✨</a></div>
+        </div>
+        <div class="product-info">
+          <div style="font-size: 0.68rem; color: var(--rose-gold-dark); letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">POWDER ARTISTRY</div>
+          <h3 class="product-title">Empress Rose Gold Powder Wand</h3>
+          <p class="product-sub">Large Fluffy Setting & Powder Brush</p>
+          <div style="font-size: 0.75rem; color: #047857; font-weight: 700; margin-bottom: 6px;">In Stock ✨</div>
+          <div class="product-price-row">
+            <span class="product-price">PKR 5,500.00</span>
+            <button class="btn-add-bag">+ ADD TO BAG</button>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_tag",
+      "label": "Section Tag",
+      "default": "SPARKLING COLLECTION"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sparkle Brush Edits"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 12,
+      "label": "Products to Show"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid"
+    }
+  ]
+}
+{% endschema %}

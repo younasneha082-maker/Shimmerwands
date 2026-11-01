@@ -1,0 +1,13 @@
+﻿{
+  "sections": {
+    "main": {
+      "type": "product-grid",
+      "settings": {
+        "heading": "Page Not Found - Explore Our Wands ✨"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
